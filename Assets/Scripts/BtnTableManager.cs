@@ -161,21 +161,32 @@ public class BtnTableManager : MonoBehaviour
             // close the window and delete the information text
             panelDealerSetter.SetActive(!panelDealerSetter.activeSelf);
             GameObject.Find("TxtActionInfo").GetComponent<Text>().text = "";
+      
+            // fill an array which contains a part of the players positions
+            ArrayList temp = new ArrayList();
+            for (int i = position + 1; i < numberOfPlayer; i++)
+                temp.Add(initalNameByPosition[i]);
+
+            // Set the positions on table ("BU", "SB", "BB", "UTG" ...)
+            for (int i = 0; i < temp.Count; i++)
+            {
+                Debug.Log("i = " + i);
+                GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text = temp[i].ToString();
+            }
+            for (int i = position; i < numberOfPlayer; i++)
+            {
+                Debug.Log("i = " + i);
+                GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text = initalNameByPosition[i - position];
+            }
+
+            // fill the current list of player on the table
+            for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
+                TableDataClass.NameByPosition[i] = GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text;
         }
         else
         {
             OpenDealerSetter();
         }
-
-        // Set the positions on table ("BU", "SB", "BB", "UTG" ...)
-        for (int i = 0; i < position; i++)
-            GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text = initalNameByPosition[numberOfPlayer - position + i]; 
-        for (int i = position; i < numberOfPlayer; i++)        
-            GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text = initalNameByPosition[i - position];
-
-        // fill the current list of player on the table
-        for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
-            TableDataClass.NameByPosition[i] = GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text;
     }
    
 

@@ -10,7 +10,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace>
     </RootNamespace>
-    <ProjectGuid>{9EFC33A1-1122-6921-01FE-B0C334CF8BD1}</ProjectGuid>
+    <ProjectGuid>{CEA4E573-3A1E-B3B4-C532-C3D11197F014}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -63,11 +63,9 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\BtnTableManager.cs" />
     <Compile Include="Assets\Scripts\cardSelector.cs" />
-    <Compile Include="Assets\Scripts\ChooseRange.cs" />
     <Compile Include="Assets\Scripts\HomeNavigation.cs" />
     <Compile Include="Assets\Scripts\initScript.cs" />
     <Compile Include="Assets\Scripts\IsoRangeClass.cs" />
-    <Compile Include="Assets\Scripts\LoadRange.cs" />
     <Compile Include="Assets\Scripts\OpenRangeClass.cs" />
     <Compile Include="Assets\Scripts\PFDecisionMaker.cs" />
     <Compile Include="Assets\Scripts\PlayerSelector.cs" />
@@ -78,19 +76,18 @@
     <Compile Include="Assets\Scripts\ResponsiveScripts\ResponsivePlayerOnTable.cs" />
     <Compile Include="Assets\Scripts\ResponsiveScripts\ResponsiveValueSelectorManager.cs" />
     <Compile Include="Assets\Scripts\TableDataClass.cs" />
-    <Compile Include="Assets\Scripts\ValuesClass.cs" />
     <Compile Include="Assets\Scripts\VilainBehaviour.cs" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>C:/Users/bflury/Documents/PF Decision maker/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/bflury/Documents/ISEN/Projets dev/AppliPokker/PF_Decision_Helper/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/bflury/Documents/PF Decision maker/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/bflury/Documents/ISEN/Projets dev/AppliPokker/PF_Decision_Helper/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/Users/bflury/Documents/PF Decision maker/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>C:/Users/bflury/Documents/ISEN/Projets dev/AppliPokker/PF_Decision_Helper/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/bflury/Documents/PF Decision maker/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/bflury/Documents/ISEN/Projets dev/AppliPokker/PF_Decision_Helper/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
