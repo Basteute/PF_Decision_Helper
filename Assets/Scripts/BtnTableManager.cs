@@ -9,8 +9,11 @@ public class BtnTableManager : MonoBehaviour
     string[] cardColor = { "H", "S", "D", "C" };
     //List<string> initalNameByPosition;
     string [] initalNameByPosition;
+    float[] initalBetByPosition;
 
     // Init from the inspector
+    //public GameObject panelDealerSetter3;
+    //public GameObject panelDealerSetter5;
     public GameObject panelDealerSetter;
     public Sprite SB;
     public Sprite BB;
@@ -18,7 +21,9 @@ public class BtnTableManager : MonoBehaviour
     // Init
     private void Start()
     {
+        // Init bets and positions
         initNamePosition();
+        initBetPosition();
 
         // Set The first blinds
         GameObject.Find("0BetPlayer").GetComponent<Image>().sprite = SB;
@@ -48,6 +53,13 @@ public class BtnTableManager : MonoBehaviour
             GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text = initalNameByPosition[i];
         }
 
+        /*
+        // set the right panelDealerSetter regarding the number of player
+        if (TableDataClass.NumberOfPlayer == 3)
+            panelDealerSetter = panelDealerSetter3;
+        else if(TableDataClass.NumberOfPlayer == 5)
+            panelDealerSetter = panelDealerSetter5;
+        */
     }
 
     private void Update()
@@ -161,23 +173,14 @@ public class BtnTableManager : MonoBehaviour
             // close the window and delete the information text
             panelDealerSetter.SetActive(!panelDealerSetter.activeSelf);
             GameObject.Find("TxtActionInfo").GetComponent<Text>().text = "";
-      
-            // fill an array which contains a part of the players positions
-            ArrayList temp = new ArrayList();
-            for (int i = position + 1; i < numberOfPlayer; i++)
-                temp.Add(initalNameByPosition[i]);
 
             // Set the positions on table ("BU", "SB", "BB", "UTG" ...)
-            for (int i = 0; i < temp.Count; i++)
-            {
-                Debug.Log("i = " + i);
-                GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text = temp[i].ToString();
-            }
-            for (int i = position; i < numberOfPlayer; i++)
-            {
-                Debug.Log("i = " + i);
-                GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text = initalNameByPosition[i - position];
-            }
+            TableDataClass.NameByPosition = initalNameByPosition;
+            for (int i = 0; i < position; i++)           
+                TableDataClass.NameByPosition = moveNext(TableDataClass.NameByPosition);
+            
+            for (int i = 0; i < numberOfPlayer; i++)
+                GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[i];
 
             // fill the current list of player on the table
             for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
@@ -185,7 +188,46 @@ public class BtnTableManager : MonoBehaviour
         }
         else
         {
+            // click from a 'D' button
             OpenDealerSetter();
+  
+        }
+    }
+
+    public void ResetTable()
+    {
+        int numberOfPlayer = TableDataClass.NumberOfPlayer;
+
+        // reset bets and names by position
+        TableDataClass.NameByPosition = initalNameByPosition;
+        initBetPosition();
+
+        // fill the current list of player on the table
+        for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
+            GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[i];
+
+        // hide all the bets except SB and BB
+        for (int i = 0; i < numberOfPlayer; i++)
+            if (i != 1 && i != 2)
+                GameObject.Find(i.ToString() + "BetPlayer").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+
+        GameObject.Find("1BetPlayer").GetComponent<Image>().sprite = SB;
+        GameObject.Find("2BetPlayer").GetComponent<Image>().sprite = BB;
+
+        // Hide all the D tokens
+        for (int i = 0; i < numberOfPlayer; i++)
+        {
+            GameObject BtnDealer = GameObject.Find("BtnD" + i.ToString());
+            if (i != 0)
+            {
+                BtnDealer.GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                BtnDealer.GetComponent<Button>().interactable = false;
+            }
+            else
+            {
+                BtnDealer.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                BtnDealer.GetComponent<Button>().interactable = true;
+            }
         }
     }
    
@@ -203,8 +245,7 @@ public class BtnTableManager : MonoBehaviour
     }
 
     void initNamePosition()
-    {
-        
+    {   
         if (TableDataClass.NumberOfPlayer == 2)     initalNameByPosition = new string[] { "BU", "BB" };
         else if(TableDataClass.NumberOfPlayer == 3) initalNameByPosition = new string[] { "BU", "SB", "BB" };
         else if(TableDataClass.NumberOfPlayer == 4) initalNameByPosition = new string[] { "BU", "SB", "BB", "CO" };
@@ -214,6 +255,34 @@ public class BtnTableManager : MonoBehaviour
         else if(TableDataClass.NumberOfPlayer == 8) initalNameByPosition = new string[] { "BU", "SB", "BB", "UTG1", "UTG2", "MP1", "CO" };
         else if(TableDataClass.NumberOfPlayer == 9) initalNameByPosition = new string[] { "BU", "SB", "BB", "UTG1", "UTG2", "MP1", "MP2", "CO" };
         TableDataClass.NameByPosition = initalNameByPosition;
+    }
+
+    void initBetPosition()
+    {
+        if (TableDataClass.NumberOfPlayer == 2) initalBetByPosition = new float[] { 0.5f, 1 };
+        else if (TableDataClass.NumberOfPlayer == 3) initalBetByPosition = new float[] { 0, 0.5f, 1 };
+        else if (TableDataClass.NumberOfPlayer == 4) initalBetByPosition = new float[] { 0, 0.5f, 1, 0};
+        else if (TableDataClass.NumberOfPlayer == 5) initalBetByPosition = new float[] { 0, 0.5f, 1, 0, 0};
+        else if (TableDataClass.NumberOfPlayer == 6) initalBetByPosition = new float[] { 0, 0.5f, 1, 0, 0, 0 };
+        else if (TableDataClass.NumberOfPlayer == 7) initalBetByPosition = new float[] { 0, 0.5f, 1, 0, 0, 0, 0 };
+        else if (TableDataClass.NumberOfPlayer == 8) initalBetByPosition = new float[] { 0, 0.5f, 1, 0, 0, 0, 0, 0};
+        else if (TableDataClass.NumberOfPlayer == 9) initalBetByPosition = new float[] { 0, 0.5f, 1, 0, 0, 0, 0, 0, 0 };
+        TableDataClass.BetsByPosition = initalBetByPosition;
+    }
+
+    string[] moveNext(string[] array)
+    {
+        // init the final array
+        string[] result = new string[array.Length];
+        result[0] = array[array.Length - 1];
+
+        // fill the final array
+        for (int i = 1; i < array.Length; i++)
+        {
+            result[i] = array[i - 1];
+        }
+
+        return result;
     }
 }
 

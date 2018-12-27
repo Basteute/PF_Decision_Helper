@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class TableDataClass
 {
-    private static float[] betsByPosition = { 0, 0.5f, 1};
+    private static float[] betsByPosition; 
     private static string [] nameByPosition;
     private static int numberOfPlayer = 3;
     

@@ -317,7 +317,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 100
+    m_MaxSize: 90
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -880,7 +880,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 10
+  m_Text: T
 --- !u!222 &136553681
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1199,7 +1199,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.2968542, y: 0.7941482}
   m_AnchorMax: {x: 0.70400006, y: 0.915815}
-  m_AnchoredPosition: {x: -0.50009155, y: 0}
+  m_AnchoredPosition: {x: -0.5001221, y: 0}
   m_SizeDelta: {x: -0.19995117, y: -0.2000122}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &183113914
@@ -1227,10 +1227,10 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 4
   m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
+  m_ChildControlHeight: 1
 --- !u!114 &183113916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1382,6 +1382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843ffa8529d9f8f40adccd504dc1a82e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelDealerSetter: {fileID: 0}
 --- !u!1 &273645385
 GameObject:
   m_ObjectHideFlags: 0
@@ -2290,7 +2291,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 60, y: 80}
+  m_SizeDelta: {x: 60, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &408324087
 MonoBehaviour:
@@ -2573,7 +2574,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 448.8682, y: 77.693985}
+  m_SizeDelta: {x: 448.8682, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &475820808
 MonoBehaviour:
@@ -2600,7 +2601,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 60
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -4514,7 +4515,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 0
-    m_MaxSize: 100
+    m_MaxSize: 90
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -6920,7 +6921,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 60, y: 80}
+  m_SizeDelta: {x: 60, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1817773657
 MonoBehaviour:

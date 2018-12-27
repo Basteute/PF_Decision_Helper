@@ -6,9 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
+    path: Assets/Scenes/HandSelect.unity
     guid: ffa3555104ca32f42ab32878571b2d08
   - enabled: 1
-    path: Assets/Scenes/Table.unity
+    path: Assets/Scenes/Table 3.unity
     guid: f5b2d615ad4a2d348ac029b97dc44f41
+  - enabled: 1
+    path: Assets/Scenes/Table 5.unity
+    guid: 82398cde1ca1e05438a2d28e69b011f1
   m_configObjects: {}

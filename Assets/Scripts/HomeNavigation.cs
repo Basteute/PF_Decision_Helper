@@ -8,7 +8,10 @@ public class HomeNavigation : MonoBehaviour
     // Change scene with the name given on the inspector
     public void NavigateTo(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        if("Table".Equals(sceneName))
+            SceneManager.LoadScene(sceneName + " " + TableDataClass.NumberOfPlayer.ToString());
+        else
+            SceneManager.LoadScene(sceneName);
     }
 }
 

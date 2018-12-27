@@ -84,7 +84,16 @@ public class PFDecisionMaker : MonoBehaviour
                 break;
 
             case 5:
-                open = compareHandWithRange(hand, "KK+, A2s");
+                if ("BU".Equals(TableDataClass.NameByPosition[0]))
+                    open = compareHandWithRange(hand, OpenRangeClass.OpenRangeBU6);
+                else if ("SB".Equals(TableDataClass.NameByPosition[0]))
+                    open = compareHandWithRange(hand, OpenRangeClass.OpenRangeSB6);
+                else if ("UTG".Equals(TableDataClass.NameByPosition[0]))
+                    open = compareHandWithRange(hand, OpenRangeClass.OpenRangeUTG6);
+                else if ("CO".Equals(TableDataClass.NameByPosition[0]))
+                    open = compareHandWithRange(hand, OpenRangeClass.OpenRangeCO6);
+                else
+                    open = true;
                 break;
 
             case 6:
