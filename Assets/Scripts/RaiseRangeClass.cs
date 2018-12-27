@@ -47,5 +47,119 @@ public class RaiseRangeClass
     private static string OOPSqueezeCallBB = "66-22, JTs, QJs, KJs, ATs";
     private static string OOPSqueeze3Bet = "QQ+, AQo, AKo, AKs, AQs";
 
+    // Getters
+    public static string GetIPVSEPCall
+    {
+        get
+        {
+            return IPVSEPCall;
+        }
+    }
+
+    public static string GetIPVSEP3BetF
+    {
+        get
+        {
+            return IPVSEP3BetF;
+        }
+    }
+
+    public static string GetIPVSEP3BetA
+    {
+        get
+        {
+            return IPVSEP3BetA;
+        }
+    }
+
+    public static string GetBUVSCOCall
+    {
+        get
+        {
+            return BUVSCOCall;
+        }
+    }
+
+    public static string GetBUVSCO3BetF
+    {
+        get
+        {
+            return BUVSCO3BetF;
+        }
+    }
+
+    public static string GetBUVSCO3BetA
+    {
+        get
+        {
+            return BUVSCO3BetA;
+        }
+    }
+
+    public static string GetBBVSSBCall
+    {
+        get
+        {
+            return BBVSSBCall;
+        }
+    }
+
+    public static string GetBBVSSB3BetF
+    {
+        get
+        {
+            return BBVSSB3BetF;
+        }
+    }
+
+    public static string GetBBVSSB3BetA
+    {
+        get
+        {
+            return BBVSSB3BetA;
+        }
+    }
+
+    public static string GetSBVSEPCall
+    {
+        get
+        {
+            return SBVSEPCall;
+        }
+    }
+
+    public static string GetSBVSEP3BetA
+    {
+        get
+        {
+            return SBVSEP3BetA;
+        }
+    }
+
+    public static string GetSBVSCOCall
+    {
+        get
+        {
+            return SBVSCOCall;
+        }
+    }
+
+    public static string GetSBVSCO3BetF
+    {
+        get
+        {
+            return SBVSCO3BetF;
+        }
+    }
+
+    public static string GetSBVSCO3BetA
+    {
+        get
+        {
+            return SBVSCO3BetA;
+        }
+    }
+
+
 }
 

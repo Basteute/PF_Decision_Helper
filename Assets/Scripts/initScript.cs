@@ -14,7 +14,7 @@ public class initScript : MonoBehaviour
 
         // Cards color
         PlayerPrefs.SetInt("cardColorL", 0);
-        PlayerPrefs.SetInt("cardColorR", 0);
+        PlayerPrefs.SetInt("cardColorR", 3);
         PlayerPrefs.SetInt("Suit", 0);
 
         // Sides

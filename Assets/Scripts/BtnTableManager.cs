@@ -250,7 +250,7 @@ public class BtnTableManager : MonoBehaviour
         else if(TableDataClass.NumberOfPlayer == 3) initalNameByPosition = new string[] { "BU", "SB", "BB" };
         else if(TableDataClass.NumberOfPlayer == 4) initalNameByPosition = new string[] { "BU", "SB", "BB", "CO" };
         else if(TableDataClass.NumberOfPlayer == 5) initalNameByPosition = new string[] { "BU", "SB", "BB", "UTG", "CO" };
-        else if(TableDataClass.NumberOfPlayer == 6) initalNameByPosition = new string[] { "BU", "SB", "BB", "UTG1", "UTG2", "CO" };
+        else if(TableDataClass.NumberOfPlayer == 6) initalNameByPosition = new string[] { "BU", "SB", "BB", "UTG", "HJ", "CO" };
         else if(TableDataClass.NumberOfPlayer == 7) initalNameByPosition = new string[] { "BU", "SB", "BB", "UTG1", "UTG2", "CO" };
         else if(TableDataClass.NumberOfPlayer == 8) initalNameByPosition = new string[] { "BU", "SB", "BB", "UTG1", "UTG2", "MP1", "CO" };
         else if(TableDataClass.NumberOfPlayer == 9) initalNameByPosition = new string[] { "BU", "SB", "BB", "UTG1", "UTG2", "MP1", "MP2", "CO" };
