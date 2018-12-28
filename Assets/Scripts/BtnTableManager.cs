@@ -53,63 +53,15 @@ public class BtnTableManager : MonoBehaviour
             GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text = initalNameByPosition[i];
         }
 
-        /*
-        // set the right panelDealerSetter regarding the number of player
-        if (TableDataClass.NumberOfPlayer == 3)
-            panelDealerSetter = panelDealerSetter3;
-        else if(TableDataClass.NumberOfPlayer == 5)
-            panelDealerSetter = panelDealerSetter5;
-        */
+        SetBetsOnTable();
     }
 
-    private void Update()
-    {
-        // Set the bets
-        for(int i = 0; i < TableDataClass.NumberOfPlayer; i++)
-        {
-            GameObject betPlayer = GameObject.Find(i.ToString() + "BetPlayer");
-
-            if (TableDataClass.BetsByPosition[i] == 0.5f)
-            {
-                betPlayer.GetComponent<Image>().sprite = SB;
-                betPlayer.GetComponent<Image>().color = new Color(1, 1, 1, 1);
-            } 
-            else if(TableDataClass.BetsByPosition[i] == 1)
-            {
-                betPlayer.GetComponent<Image>().sprite = BB;
-                betPlayer.GetComponent<Image>().color = new Color(1, 1, 1, 1);
-            }
-            else if (TableDataClass.BetsByPosition[i] == 2)
-            {
-                betPlayer.GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/orangeChip"); 
-                betPlayer.GetComponent<Image>().color = new Color(1, 1, 1, 1);
-            }
-            else if (TableDataClass.BetsByPosition[i] == 3)
-            {
-                betPlayer.GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/blueChip");
-                betPlayer.GetComponent<Image>().color = new Color(1, 1, 1, 1);
-            }
-            else if (TableDataClass.BetsByPosition[i] == 4)
-            {
-                betPlayer.GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/yellowChip");
-                betPlayer.GetComponent<Image>().color = new Color(1, 1, 1, 1);
-            }
-            else
-            {
-                TableDataClass.BetsByPosition[i] = 0; // fold
-                betPlayer.GetComponent<Image>().color = new Color(1, 1, 1, 0); // Delete the Bet
-            }
-                
-        }
-
-        // Disable the text "Select a Dealer" when it's not necessary
-        //if(!panelDealerSetter.activeSelf)
-            //GameObject.Find("TxtActionInfo").GetComponent<Text>().text = "";
-    }
 
     // Open or close the panelDealer selector
     public void OpenDealerSetter()
     {
+        ResetTable();
+
         // Diplay a panel wich mask the table and enable the D buttons
         panelDealerSetter.SetActive(!panelDealerSetter.activeSelf);
 
@@ -129,11 +81,13 @@ public class BtnTableManager : MonoBehaviour
         }
  
         GameObject.Find("TxtActionInfo").GetComponent<Text>().text = "Select a dealer";
+        SetBetsOnTable();
     }
 
     // Set the dealer after clicking on one of the dealer position
     public void DealerSetter(int position)
     {
+        ResetTable();
         int numberOfPlayer = TableDataClass.NumberOfPlayer;
 
         if (panelDealerSetter.activeSelf)
@@ -190,8 +144,9 @@ public class BtnTableManager : MonoBehaviour
         {
             // click from a 'D' button
             OpenDealerSetter();
-  
         }
+
+        SetBetsOnTable();
     }
 
     public void ResetTable()
@@ -201,6 +156,16 @@ public class BtnTableManager : MonoBehaviour
         // reset bets and names by position
         TableDataClass.NameByPosition = initalNameByPosition;
         initBetPosition();
+
+        // reset the board
+        GameObject.Find("ImgCall").GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/orangeChip");
+        GameObject.Find("ImgRaise").GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/blueChip");
+        /*
+        if(TableDataClass.NumberOfPlayer == 3)
+            GameObject.Find("TxtCurrentPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[0];
+        else
+            GameObject.Find("TxtCurrentPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[3];
+        */
 
         // fill the current list of player on the table
         for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
@@ -229,8 +194,9 @@ public class BtnTableManager : MonoBehaviour
                 BtnDealer.GetComponent<Button>().interactable = true;
             }
         }
+
+        SetBetsOnTable();
     }
-   
 
     void ResetBets(int SBPos, int BBPos)
     {
@@ -242,6 +208,8 @@ public class BtnTableManager : MonoBehaviour
         }
         TableDataClass.BetsByPosition[SBPos] = 0.5f;
         TableDataClass.BetsByPosition[BBPos] = 1;
+
+        SetBetsOnTable();
     }
 
     void initNamePosition()
@@ -283,6 +251,46 @@ public class BtnTableManager : MonoBehaviour
         }
 
         return result;
+    }
+
+    void SetBetsOnTable()
+    { 
+        // Set the bets
+        for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
+        {
+            GameObject betPlayer = GameObject.Find(i.ToString() + "BetPlayer");
+
+            if (TableDataClass.BetsByPosition[i] == 0.5)
+            {
+                betPlayer.GetComponent<Image>().sprite = SB;
+                betPlayer.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            }
+            else if (TableDataClass.BetsByPosition[i] == 1)
+            {
+                betPlayer.GetComponent<Image>().sprite = BB;
+                betPlayer.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            }
+            else if (TableDataClass.BetsByPosition[i] == 2)
+            {
+                betPlayer.GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/orangeChip");
+                betPlayer.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            }
+            else if (TableDataClass.BetsByPosition[i] == 3)
+            {
+                betPlayer.GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/blueChip");
+                betPlayer.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            }
+            else if (TableDataClass.BetsByPosition[i] == 4)
+            {
+                betPlayer.GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/yellowChip");
+                betPlayer.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            }
+            else
+            {
+                TableDataClass.BetsByPosition[i] = 0; // fold
+                betPlayer.GetComponent<Image>().color = new Color(1, 1, 1, 0); // Delete the Bet
+            }
+        }
     }
 }
 
