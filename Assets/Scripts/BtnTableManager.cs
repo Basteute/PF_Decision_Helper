@@ -147,6 +147,13 @@ public class BtnTableManager : MonoBehaviour
                     BtnDealer.GetComponent<Image>().color = new Color(1, 1, 1, 0);
                     BtnDealer.GetComponent<Button>().interactable = false;
                 }
+                else
+                {
+                    GameObject BtnDealer = GameObject.Find("BtnD" + i.ToString());
+                    BtnDealer.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                    BtnDealer.GetComponent<Button>().interactable = true;
+                }
+                
             }
 
             // Set the SB and BB
