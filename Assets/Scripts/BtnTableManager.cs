@@ -359,6 +359,7 @@ public class BtnTableManager : MonoBehaviour
 /*
 for(int i = 0; i < TableDataClass.NumberOfPlayer; i++)
 {
-
+	
 }
 */
+
