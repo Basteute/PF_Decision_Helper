@@ -362,4 +362,3 @@ for(int i = 0; i < TableDataClass.NumberOfPlayer; i++)
 	
 }
 */
-
