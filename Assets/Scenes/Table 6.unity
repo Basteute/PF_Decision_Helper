@@ -2344,7 +2344,7 @@ Prefab:
     - target: {fileID: 224945673499228126, guid: 910fab2615c85794d87cad8d0a93294f,
         type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 224945673499228126, guid: 910fab2615c85794d87cad8d0a93294f,
         type: 2}
@@ -4503,7 +4503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

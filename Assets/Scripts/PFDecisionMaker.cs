@@ -23,7 +23,7 @@ public class PFDecisionMaker : MonoBehaviour
                 heroHand += "o";
         }
         if(!panelDealerSetter.activeSelf)
-            GameObject.Find("Decision").GetComponent<Text>().text = getOpenDecision(heroHand);
+            GameObject.Find("Decision").GetComponent<Text>().text = PFDecision(heroHand);
         else
             GameObject.Find("Decision").GetComponent<Text>().text = "";
             
@@ -48,12 +48,19 @@ public class PFDecisionMaker : MonoBehaviour
         // check if anyone has opened before hero THIS DOES NOT HANDLE HEADS UP
         int numberOfPlayer = TableDataClass.NumberOfPlayer;
         bool vilainOpened = false;
-        for (int i = 2; i < numberOfPlayer; i++)
-            if (TableDataClass.BetsByPosition[i] >= 1)
-                vilainOpened = true;
+		int numberOfBBCall = 0;
+		for (int i = 0; i < numberOfPlayer; i++)
+		{
+			if (TableDataClass.BetsByPosition[i] == 1)
+                numberOfBBCall++;
+			if (TableDataClass.BetsByPosition[i] > 1)
+				vilainOpened = true;
+		}
+		if(numberOfBBCall > 1)
+			vilainOpened = true;
 
         // select the advice decision regarding it's an open raise or not
-        if (vilainOpened)
+        if (!vilainOpened)
             result = getOpenDecision(hand);
         else
             result = getRaiseDecision(hand);
@@ -160,7 +167,7 @@ public class PFDecisionMaker : MonoBehaviour
                 maxRaise++;
                 numberOfRaiser = 1;
             }
-            else if (TableDataClass.BetsByPosition[i] == maxRaise)
+            else if (TableDataClass.BetsByPosition[i] == maxRaise && maxRaise != 1)
             {
                 numberOfRaiser++;
             }
@@ -175,28 +182,37 @@ public class PFDecisionMaker : MonoBehaviour
     // Decision when a raise from vilain is called from another vilain
     string getMultiWayRaise(string hand, int numberOfRaiser)
     {
-        return "notDevelopped";
+        return "getMultiWayRaise";
     }
 
     // Decision when all players have limped before hero
     string getLimpDecision(string hand, int numberOfLimp)
     {
-        /*
-         * if(BB && numberOfLimp == 1 &&)
-         * {
-         *      if(compareHandWithRange(hand, "KK+, A2s");
-         * }
-         * 
-         * 
-         */
+        bool isoRaise = false;
+        string heroPos = TableDataClass.NameByPosition[0];
+        if ("BB".Equals(heroPos) && numberOfLimp == 1)
+        {
+            if (TableDataClass.BetsByPosition[TableDataClass.NumberOfPlayer - 1] == 1) // SB has limped
+                isoRaise = compareHandWithRange(hand, IsoRangeClass.IsoBBVSSB40);
+            else
+                isoRaise = compareHandWithRange(hand, IsoRangeClass.IsoBBVS1Limp40);
+        }
+        else if("BB".Equals(heroPos) && numberOfLimp == 2 || numberOfLimp == 1)
+        {
+            isoRaise = compareHandWithRange(hand, IsoRangeClass.IsoOOPVS1Limp);
+        }
 
-        return "notDevelopped";
+
+        if (isoRaise)
+            return "Iso";
+        else
+            return "You can either call or fold";
     }
 
     // Decision when 1 vilain opened before hero
     string getHURaise(string hand)
     {
-        return "notDevelopped";
+        return "HURaise";
     }
 
     // Check if a hand belongs to a range

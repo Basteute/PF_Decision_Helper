@@ -76,8 +76,8 @@
     <Compile Include="Assets\Scripts\ResponsiveScripts\ResponsivePlayerOnTable.cs" />
     <Compile Include="Assets\Scripts\ResponsiveScripts\ResponsiveValueSelectorManager.cs" />
     <Compile Include="Assets\Scripts\TableDataClass.cs" />
+    <Compile Include="Assets\Scripts\turnManager.cs" />
     <Compile Include="Assets\Scripts\VilainBehaviour.cs" />
-    <Compile Include="Assets\turnManager.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/bflury/Documents/ISEN/Projets dev/AppliPokker/PF_Decision_Helper/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

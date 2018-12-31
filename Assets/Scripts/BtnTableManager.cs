@@ -7,13 +7,10 @@ using UnityScript.Lang;
 public class BtnTableManager : MonoBehaviour
 {
     string[] cardColor = { "H", "S", "D", "C" };
-    //List<string> initalNameByPosition;
     string [] initalNameByPosition;
     float[] initalBetByPosition;
 
     // Init from the inspector
-    //public GameObject panelDealerSetter3;
-    //public GameObject panelDealerSetter5;
     public GameObject panelDealerSetter;
     public Sprite SB;
     public Sprite BB;
@@ -101,27 +98,12 @@ public class BtnTableManager : MonoBehaviour
                     BtnDealer.GetComponent<Image>().color = new Color(1, 1, 1, 0);
                     BtnDealer.GetComponent<Button>().interactable = false;
                 }
-            }
-
-            // Set the SB and BB
-            Sprite mySB = Resources.Load<Sprite>("Resources/Icons/SB");
-            if (position + 1 == numberOfPlayer)
-            {
-                ResetBets(0, 1);
-                GameObject.Find("0BetPlayer").GetComponent<Image>().sprite = SB;
-                GameObject.Find("1BetPlayer").GetComponent<Image>().sprite = BB;
-            }
-            else if (position + 2 == numberOfPlayer)
-            {
-                ResetBets(numberOfPlayer - 1, 0);
-                GameObject.Find((numberOfPlayer - 1).ToString() + "BetPlayer").GetComponent<Image>().sprite = SB;
-                GameObject.Find("0BetPlayer").GetComponent<Image>().sprite = BB;
-            }
-            else
-            {
-                ResetBets(position + 1, position + 2);
-                GameObject.Find((position + 1).ToString() + "BetPlayer").GetComponent<Image>().sprite = SB;
-                GameObject.Find((position + 2).ToString() + "BetPlayer").GetComponent<Image>().sprite = BB;
+                else
+                {
+                    GameObject BtnDealer = GameObject.Find("BtnD" + i.ToString());
+                    BtnDealer.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                    BtnDealer.GetComponent<Button>().interactable = true;
+                }
             }
 
             // close the window and delete the information text
@@ -130,15 +112,52 @@ public class BtnTableManager : MonoBehaviour
 
             // Set the positions on table ("BU", "SB", "BB", "UTG" ...)
             TableDataClass.NameByPosition = initalNameByPosition;
-            for (int i = 0; i < position; i++)           
+            for (int i = 0; i < position; i++)
                 TableDataClass.NameByPosition = moveNext(TableDataClass.NameByPosition);
-            
+
             for (int i = 0; i < numberOfPlayer; i++)
                 GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[i];
 
             // fill the current list of player on the table
             for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
                 TableDataClass.NameByPosition[i] = GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text;
+
+            // init for Undo button
+            TableDataClass.PreviousAction.Clear();
+            TableDataClass.PreviousBet.Clear();
+            TableDataClass.PreviousBet.Add(0.5f);
+            TableDataClass.PreviousBet.Add(1);
+
+            // Set the SB, BB and the current player
+            Sprite mySB = Resources.Load<Sprite>("Resources/Icons/SB");
+            if (position + 1 == numberOfPlayer)
+            {
+                ResetBets(0, 1);
+                GameObject.Find("0BetPlayer").GetComponent<Image>().sprite = SB;
+                GameObject.Find("1BetPlayer").GetComponent<Image>().sprite = BB;
+                SetCurrentPlayer(2);
+            }
+            else if (position + 2 == numberOfPlayer)
+            {
+                ResetBets(numberOfPlayer - 1, 0);
+                GameObject.Find((numberOfPlayer - 1).ToString() + "BetPlayer").GetComponent<Image>().sprite = SB;
+                GameObject.Find("0BetPlayer").GetComponent<Image>().sprite = BB;
+                SetCurrentPlayer(1);
+            }
+            else if (position + 3 == numberOfPlayer)
+            {
+                ResetBets(position + 1, position + 2);
+                GameObject.Find((position + 1).ToString() + "BetPlayer").GetComponent<Image>().sprite = SB;
+                GameObject.Find((position + 2).ToString() + "BetPlayer").GetComponent<Image>().sprite = BB;
+                SetCurrentPlayer(0);
+            }
+            else
+            {
+                ResetBets(position + 1, position + 2);
+                GameObject.Find((position + 1).ToString() + "BetPlayer").GetComponent<Image>().sprite = SB;
+                GameObject.Find((position + 2).ToString() + "BetPlayer").GetComponent<Image>().sprite = BB;
+                SetCurrentPlayer(position + 3);
+            }
         }
         else
         {
@@ -160,22 +179,34 @@ public class BtnTableManager : MonoBehaviour
         // reset the board
         GameObject.Find("ImgCall").GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/orangeChip");
         GameObject.Find("ImgRaise").GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/blueChip");
-        /*
-        if(TableDataClass.NumberOfPlayer == 3)
-            GameObject.Find("TxtCurrentPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[0];
-        else
-            GameObject.Find("TxtCurrentPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[3];
-        */
 
-        // fill the current list of player on the table
+        // change name of the current player on the board            
+        if (TableDataClass.NumberOfPlayer == 3)
+            GameObject.Find("TxtCurrentPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[TableDataClass.GetIndexOfPosition("BU")];
+        else
+            GameObject.Find("TxtCurrentPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[TableDataClass.GetIndexOfPosition("BB") + 1];
+        //GameObject.Find("TxtCurrentPlayer").GetComponent<Text>().text = TableDataClass.CurrentPlayer;
+
+       
         for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
+        {
+            // fill the current list of player on the table
             GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[i];
 
-        // hide all the bets except SB and BB
-        for (int i = 0; i < numberOfPlayer; i++)
+            // hide all the bets except SB and BB
             if (i != 1 && i != 2)
                 GameObject.Find(i.ToString() + "BetPlayer").GetComponent<Image>().color = new Color(1, 1, 1, 0);
 
+            // Unfold players
+            TableDataClass.FoldByPosition[i] = false;
+            if(i != 0)
+            {
+                GameObject.Find(i.ToString() + "BtnCardPlayer").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                GameObject.Find(i.ToString() + "BtnCardPlayer").GetComponent<Button>().interactable = true;
+            }
+        }         
+
+        // Set SB and BB bets
         GameObject.Find("1BetPlayer").GetComponent<Image>().sprite = SB;
         GameObject.Find("2BetPlayer").GetComponent<Image>().sprite = BB;
 
@@ -292,6 +323,42 @@ public class BtnTableManager : MonoBehaviour
             }
         }
     }
-}
 
-// new List<string>(new string[] { "BU", "SB", "BB", "UTG1", "UTG2", "MP1", "MP2", "CO" });
+    public void SetCurrentPlayer(int playerID)
+    {
+        // Erase all the previous highlight
+        for(int i = 0; i < TableDataClass.NumberOfPlayer; i++)     
+            GameObject.Find(i.ToString() + "PanelPlayer").GetComponent<Image>().color = new Color(1, 1, 0.67f, 0);
+        
+
+        // Skip the players who have fold
+        for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
+        {
+            // exception at the end of the list
+            if (i == TableDataClass.NumberOfPlayer - 1 && TableDataClass.FoldByPosition[i] == true)
+            {
+                playerID = 0;
+                break;
+            }
+
+            // Skipper
+            if (TableDataClass.FoldByPosition[i] == false && i >= playerID)
+            {
+                playerID = i;
+                break;
+            }
+        }
+
+        // Highlight the new current player and erase the color of the previous one
+        GameObject.Find(playerID.ToString() + "PanelPlayer").GetComponent<Image>().color = new Color(1, 1, 0.67f, 0.5f);
+
+        // Change the name of the current player on the board
+        GameObject.Find("TxtCurrentPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[playerID];
+    }
+}
+/*
+for(int i = 0; i < TableDataClass.NumberOfPlayer; i++)
+{
+
+}
+*/

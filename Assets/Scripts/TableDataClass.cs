@@ -10,6 +10,7 @@ public static class TableDataClass
     private static bool[] foldByPosition;
     private static ArrayList previousAction = new ArrayList();
     private static ArrayList previousBet = new ArrayList();
+    private static string currentPlayer;
 
     // Who has bet and how much
     public static float[] BetsByPosition
@@ -87,5 +88,30 @@ public static class TableDataClass
         }
     }
 
+    // What is the name of each player ("BU", "SB", "BB"...)
+    public static string CurrentPlayer
+    {
+        get
+        {
+            return currentPlayer;
+        }
+        set
+        {
+            currentPlayer = value;
+        }
+    }
+
+    // Return the index of "BB" for instance
+    public static int GetIndexOfPosition(string position)
+    {
+        int result = -1;
+
+        for(int i = 0; i < numberOfPlayer; i++)       
+            if(position.Equals(nameByPosition))        
+                return i;
+            
+        
+        return result;
+    }
 
 }
