@@ -14,6 +14,7 @@ public class PFDecisionMaker : MonoBehaviour
         int bestHeroCard = Mathf.Max(PlayerPrefs.GetInt("cardValueR"), PlayerPrefs.GetInt("cardValueL"));
         int minHeroCard = Mathf.Min(PlayerPrefs.GetInt("cardValueR"), PlayerPrefs.GetInt("cardValueL"));
 
+        // Calculate the decision
         string heroHand = getCardName(bestHeroCard) + getCardName(minHeroCard);
         if (!bestHeroCard.Equals(minHeroCard))
         {
@@ -22,11 +23,70 @@ public class PFDecisionMaker : MonoBehaviour
             else
                 heroHand += "o";
         }
-        if(!panelDealerSetter.activeSelf)
-            GameObject.Find("Decision").GetComponent<Text>().text = PFDecision(heroHand);
+        string decision = PFDecision(heroHand);
+        if (!panelDealerSetter.activeSelf)
+            GameObject.Find("Decision").GetComponent<Text>().text = decision;
         else
             GameObject.Find("Decision").GetComponent<Text>().text = "";
-            
+
+        // Display Extra info about the adviced action
+        switch(decision)
+        {
+            case "Relance d'ouverture":
+                GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Mise recommandée : 3 grosses blindes";
+                break;
+
+            case "fold":
+                GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Il est recommandé de coucher cette main dans cette position";
+                break;
+
+            case "Iso raise":
+                // find the number of limper
+                float numberOfLimp = 0;
+                for(int i = 1; i < TableDataClass.NumberOfPlayer; i++)           
+                    if (TableDataClass.BetsByPosition[i] == 1.0)
+                        numberOfLimp++;
+                
+                GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Iso raise classique : 3 grosse blindes + 1 pour chaque limp\n" + "Mise recommandée : " + (3 + numberOfLimp).ToString() + " BB";
+                break;
+
+            case "Vous pouvez suivre ou vous coucher":
+                GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Suivre ne vous coute pas chère, cependant se coucher reste viable";
+                break;
+
+            case "Squeeze":
+                GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Squeeze standard : 4x la mise de l'adversaire";
+                break;
+
+            case "Relance":
+                GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Relance standard : 3x la mise de l'adversaire";
+                break;
+
+            case "Relance forte":
+                GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Relance standard : 3x la mise de l'adversaire \n si l'adversaire sur-relance, partez à tapis";
+                break;
+
+            case "Relance faible":
+                GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Relance standard : 3x la mise de l'adversaire \n si l'adversaire sur-relance, couchez votre main";
+                break;
+
+            case "Suivre la relance":
+                GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Il est conseillé de simplement suivre la mise de votre adversaire";
+                break;
+
+            case "Suivre les relances":
+                GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Il est conseillé de simplement suivre la mise de vos adversaires";
+                break;
+
+            case "Les décisions en cas de 4Bet (sur-sur-relance) ne sont pas calculées par cette application":
+                GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Dans cette situation, il est préférable de ne jouer le coup qu'avec une main très forte";
+                break;
+
+            default:
+                GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "";
+                break;
+
+        }
     }
 
     public void BtnTest(string range)
@@ -139,7 +199,7 @@ public class PFDecisionMaker : MonoBehaviour
         }
 
         if (open)
-            return "open";
+            return "Relance d'ouverture";
         else
             return "fold";
     }
@@ -153,36 +213,71 @@ public class PFDecisionMaker : MonoBehaviour
             if (TableDataClass.BetsByPosition[i] == 1)
                 numberOfBBCall++;
 
-        // hero has face a limp situation
-        if (numberOfBBCall > 1)
-            return getLimpDecision(hand, numberOfBBCall - 1);
-
         // check the number of player who raised
         int maxRaise = 1;
-        int numberOfRaiser = 0;
+        ArrayList posOfRaisers = new ArrayList();
         for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
         {
             if (TableDataClass.BetsByPosition[i] > maxRaise)
             {
-                maxRaise++;
-                numberOfRaiser = 1;
+                maxRaise = (int) TableDataClass.BetsByPosition[i];
+                posOfRaisers.Clear();
+                posOfRaisers.Add(i);
             }
             else if (TableDataClass.BetsByPosition[i] == maxRaise && maxRaise != 1)
             {
-                numberOfRaiser++;
+                posOfRaisers.Add(i);
             }
         }
 
-        if (numberOfRaiser == 1)
-            return getHURaise(hand);
+        // hero has face a limp situation
+        if (numberOfBBCall > 1 && maxRaise == 1)
+            return getLimpDecision(hand, numberOfBBCall - 1);
+
+        // Decide regarding the situation on the table
+        if (maxRaise >= 4)
+            return "Les décisions en cas de 4Bet (sur-sur-relance) ne sont pas calculées par cette application";
+        else if (posOfRaisers.Count == 1)
+            return getHURaise(hand, (int)posOfRaisers[0]);
         else
-            return getMultiWayRaise(hand, numberOfRaiser);
+            return getMultiWayRaise(hand, posOfRaisers);
     }
 
     // Decision when a raise from vilain is called from another vilain
-    string getMultiWayRaise(string hand, int numberOfRaiser)
+    string getMultiWayRaise(string hand, ArrayList posOfRaisers)
     {
-        return "getMultiWayRaise";
+        string result = "error";
+
+        // Check if hero is IP or OOP
+        bool IP = true;
+        int indexOfBU = TableDataClass.GetIndexOfPosition("BU");
+        for(int i = 0; i < posOfRaisers.Count; i++)        
+            if (((int)posOfRaisers[i] - indexOfBU) < TableDataClass.GetIndexOfPosition(TableDataClass.NameByPosition[0]))
+                IP = false;
+
+        // Get the decision 
+        if(IP)
+        {
+            if (compareHandWithRange(hand, RaiseRangeClass.GetIPSqueezeCall))
+                result = "Suivre les relances";
+            else if (compareHandWithRange(hand, RaiseRangeClass.GetIPSqueeze3Bet))
+                result = "Squeeze";
+            else
+                result = "fold";
+        }
+        else
+        {
+            if (compareHandWithRange(hand, RaiseRangeClass.GetOOPSqueeze3Bet))
+                result = "Relance";
+            else if (compareHandWithRange(hand, RaiseRangeClass.GetOOPSqueezeCall))
+                result = "Suivre les relances";
+            else if (TableDataClass.NameByPosition[0] == "BB" && compareHandWithRange(hand, RaiseRangeClass.GetOOPSqueezeCallBB))
+                result = "Suivre les relances";
+            else
+                result = "fold";
+        }
+       
+        return result;
     }
 
     // Decision when all players have limped before hero
@@ -204,15 +299,130 @@ public class PFDecisionMaker : MonoBehaviour
 
 
         if (isoRaise)
-            return "Iso";
+            return "Iso raise";
         else
-            return "You can either call or fold";
+            return "Vous pouvez suivre ou vous coucher";
     }
 
     // Decision when 1 vilain opened before hero
-    string getHURaise(string hand)
+    string getHURaise(string hand, int posOfRaiser)
     {
-        return "HURaise";
+        string result = "getHURaise";
+        string posOfHero = TableDataClass.NameByPosition[0];
+
+        // Check if hero is IP or OOP
+        bool IP = true;
+        int indexOfBU = TableDataClass.GetIndexOfPosition("BU");     
+        if ((posOfRaiser - indexOfBU) < TableDataClass.GetIndexOfPosition(posOfHero))
+                IP = false;
+
+        // Get the decision 
+        if (IP)
+        {
+            // BU
+            if(posOfHero == "BU" && "CO".Equals(TableDataClass.NameByPosition[posOfRaiser]))
+            {
+                if (compareHandWithRange(hand, RaiseRangeClass.GetBUVSCO3BetA))
+                    result = "Relance forte";
+                else if (compareHandWithRange(hand, RaiseRangeClass.GetBUVSCO3BetF))
+                    result = "Relance faible";
+                else if (compareHandWithRange(hand, RaiseRangeClass.GetBUVSCOCall))
+                    result = "Suivre la relance";
+                else
+                    result = "fold";
+            }
+            // BB
+            else if (posOfHero == "BB" && "SB".Equals(TableDataClass.NameByPosition[posOfRaiser]))
+            {
+                if (compareHandWithRange(hand, RaiseRangeClass.GetBBVSSB3BetA))
+                    result = "Relance forte";
+                else if (compareHandWithRange(hand, RaiseRangeClass.GetBBVSSB3BetF))
+                    result = "Relance faible";
+                else if (compareHandWithRange(hand, RaiseRangeClass.GetBBVSSBCall))
+                    result = "Suivre la relance";
+                else
+                    result = "fold";
+            }
+            else
+            {
+                if (compareHandWithRange(hand, RaiseRangeClass.GetIPVSEP3BetA))
+                    result = "Relance forte";
+                else if (compareHandWithRange(hand, RaiseRangeClass.GetIPVSEP3BetF))
+                    result = "Relance faible";
+                else if (compareHandWithRange(hand, RaiseRangeClass.GetIPVSEPCall))
+                    result = "Suivre la relance";
+                else
+                    result = "fold";
+            }
+        }
+        else // OOP
+        {
+            // SB
+            if (posOfHero == "SB" && "CO".Equals(TableDataClass.NameByPosition[posOfRaiser]))
+            {
+                if (compareHandWithRange(hand, RaiseRangeClass.GetSBVSCO3BetA))
+                    result = "Relance forte";
+                else if (compareHandWithRange(hand, RaiseRangeClass.GetSBVSCO3BetF))
+                    result = "Relance faible";
+                else if (compareHandWithRange(hand, RaiseRangeClass.GetSBVSCOCall))
+                    result = "Suivre la relance";
+                else
+                    result = "fold";
+            }
+            else if (posOfHero == "SB" && "BU".Equals(TableDataClass.NameByPosition[posOfRaiser]))
+            {
+                if (compareHandWithRange(hand, RaiseRangeClass.GetSBVSBU3BetA))
+                    result = "Relance forte";
+                else if (compareHandWithRange(hand, RaiseRangeClass.GetSBVSBU3BetF))
+                    result = "Relance faible";
+                else if (compareHandWithRange(hand, RaiseRangeClass.GetSBVSBUCall))
+                    result = "Suivre la relance";
+                else
+                    result = "fold";
+            }
+            else
+            {
+                if (compareHandWithRange(hand, RaiseRangeClass.GetSBVSEP3BetA))
+                    result = "Relance forte";
+                else if (compareHandWithRange(hand, RaiseRangeClass.GetSBVSEPCall))
+                    result = "Suivre la relance";
+                else
+                    result = "fold";
+            }
+
+            // BB
+            if (posOfHero == "BB" && "CO".Equals(TableDataClass.NameByPosition[posOfRaiser]))
+            {
+                if (compareHandWithRange(hand, RaiseRangeClass.GetBBVSCO3BetA))
+                    result = "Relance forte";
+                else if (compareHandWithRange(hand, RaiseRangeClass.GetBBVSCO3BetF))
+                    result = "Relance faible";
+                else if (compareHandWithRange(hand, RaiseRangeClass.GetBBVSCOCall))
+                    result = "Suivre la relance";
+                else
+                    result = "fold";
+            }
+            else if (posOfHero == "BB" && "BU".Equals(TableDataClass.NameByPosition[posOfRaiser]))
+            {
+                if (compareHandWithRange(hand, RaiseRangeClass.GetBBVSBU3BetF))
+                    result = "Relance faible";
+                else if (compareHandWithRange(hand, RaiseRangeClass.GetBBVSBUCall))
+                    result = "Suivre la relance";
+                else
+                    result = "fold";
+            }
+            else
+            {
+                if (compareHandWithRange(hand, RaiseRangeClass.GetBBVSEP3BetA))
+                    result = "Relance forte";
+                else if (compareHandWithRange(hand, RaiseRangeClass.GetBBVSEPCall))
+                    result = "Suivre la relance";
+                else
+                    result = "fold";
+            }
+        }
+
+        return result;
     }
 
     // Check if a hand belongs to a range
@@ -226,6 +436,7 @@ public class PFDecisionMaker : MonoBehaviour
                 return true;
 
         return result;
+        
     }
 
     // "A2s+, K2s+, 88+" => un tableau de mains 
@@ -275,9 +486,9 @@ public class PFDecisionMaker : MonoBehaviour
         int minCard = Mathf.Min(getCardNumber(splittedHand[0].ToString()), getCardNumber(splittedHand[1].ToString()));
 
         // return an array regarding the kind of hand
-        if(splittedHand.Length == 2)// deal with single pocket pairs like AA
+        if(splittedHand.Length == 2 && splittedHand[0].Equals(splittedHand[1]))// deal with single pocket pairs like AA
         {
-            result.Add(getCardName(splittedHand[0]) + getCardName(splittedHand[1]));
+            result.Add(splittedHand[0].ToString() + splittedHand[0].ToString());
         }
         else if (splittedHand[0].Equals(splittedHand[1]) && '+'.Equals(splittedHand[2]))// deal with pocket pairs +
         {

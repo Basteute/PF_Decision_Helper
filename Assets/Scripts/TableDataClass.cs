@@ -107,7 +107,7 @@ public static class TableDataClass
         int result = -1;
 
         for(int i = 0; i < numberOfPlayer; i++)       
-            if(position.Equals(nameByPosition))        
+            if(position.Equals(nameByPosition[i]))        
                 return i;
             
         

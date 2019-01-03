@@ -10,14 +10,14 @@ EditorBuildSettings:
     guid: ffa3555104ca32f42ab32878571b2d08
   - enabled: 1
     path: Assets/Scenes/Table 3.unity
-    guid: f5b2d615ad4a2d348ac029b97dc44f41
-  - enabled: 1
-    path: Assets/Scenes/Table 5.unity
-    guid: edb1cb1cc3de7cf4b86ca9e0f98ccb5f
+    guid: d8aab3424780c06458b3920cfe304c16
   - enabled: 1
     path: Assets/Scenes/Table 4.unity
-    guid: 82398cde1ca1e05438a2d28e69b011f1
+    guid: db68e59a1bf09c64e804785012eb9f03
+  - enabled: 1
+    path: Assets/Scenes/Table 5.unity
+    guid: 12ca59393c5a29c48b495d557e63c3a1
   - enabled: 1
     path: Assets/Scenes/Table 6.unity
-    guid: ac8516e6274c3fb49a5e3946f29ffd80
+    guid: 3485980fc39d10e4b9acb5996a4feccb
   m_configObjects: {}

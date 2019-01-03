@@ -20,10 +20,10 @@ public class PlayerSelector : MonoBehaviour
         else
             TableDataClass.NumberOfPlayer--;
 
-        // Make a loop, the number of player goes from 3 to 9
+        // Make a loop, the number of player goes from 3 to 6
         if (TableDataClass.NumberOfPlayer == 2)
-            TableDataClass.NumberOfPlayer = 9;
-        else if (TableDataClass.NumberOfPlayer == 10)
+            TableDataClass.NumberOfPlayer = 6;
+        else if (TableDataClass.NumberOfPlayer == 7)
             TableDataClass.NumberOfPlayer = 3;
 
         // Change the text

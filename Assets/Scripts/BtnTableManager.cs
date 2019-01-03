@@ -50,9 +50,28 @@ public class BtnTableManager : MonoBehaviour
             GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text = initalNameByPosition[i];
         }
 
+        // Disable all button cards in vilain panel
+        for(int i = 1; i < TableDataClass.NumberOfPlayer; i++)
+        {
+            GameObject.Find(i.ToString() + "BtnCardPlayer").GetComponent<Button>().interactable = false;
+            GameObject.Find(i.ToString() + "BtnPlayer").GetComponent<Button>().interactable = false;
+        }
+
         SetBetsOnTable();
     }
 
+    /*
+    // TEMPORAIRE (DEBUG)
+    private void Update()
+    {
+        string message = "BtnTable Manager | previous bet : ";
+        for(int i = 0; i < TableDataClass.PreviousBet.Count; i++)
+        {
+            message += TableDataClass.PreviousBet[i] + "  ";
+        }
+        Debug.Log(message);
+    }
+    */   
 
     // Open or close the panelDealer selector
     public void OpenDealerSetter()
@@ -177,16 +196,8 @@ public class BtnTableManager : MonoBehaviour
         initBetPosition();
 
         // reset the board
-        GameObject.Find("ImgCall").GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/orangeChip");
-        GameObject.Find("ImgRaise").GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/blueChip");
-
-        // change name of the current player on the board            
-        if (TableDataClass.NumberOfPlayer == 3)
-            GameObject.Find("TxtCurrentPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[TableDataClass.GetIndexOfPosition("BU")];
-        else
-            GameObject.Find("TxtCurrentPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[TableDataClass.GetIndexOfPosition("BB") + 1];
-        //GameObject.Find("TxtCurrentPlayer").GetComponent<Text>().text = TableDataClass.CurrentPlayer;
-
+        GameObject.Find("ImgCall").GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/BB");
+        GameObject.Find("ImgRaise").GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/orangeChip");
        
         for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
         {
@@ -204,7 +215,19 @@ public class BtnTableManager : MonoBehaviour
                 GameObject.Find(i.ToString() + "BtnCardPlayer").GetComponent<Image>().color = new Color(1, 1, 1, 1);
                 GameObject.Find(i.ToString() + "BtnCardPlayer").GetComponent<Button>().interactable = true;
             }
-        }         
+        }
+
+        // change the current player on the board           
+        if (TableDataClass.NumberOfPlayer == 3)
+        {
+            GameObject.Find("TxtCurrentPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[TableDataClass.GetIndexOfPosition("BU")];
+            SetCurrentPlayer(TableDataClass.GetIndexOfPosition("BU"));
+        }
+        else
+        {
+            GameObject.Find("TxtCurrentPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[TableDataClass.GetIndexOfPosition("BB") + 1];
+            SetCurrentPlayer(3);
+        }
 
         // Set SB and BB bets
         GameObject.Find("1BetPlayer").GetComponent<Image>().sprite = SB;

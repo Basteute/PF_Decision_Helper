@@ -1,12 +1,9 @@
 Android
 PlayerPath?
-C:/Users/bflury/Documents/ISEN/Projets dev/AppliPokker/PF_Decision_Helper/PF_Decision_Helper2.apk
+C:/Users/bflury/Documents/ISEN/Projets dev/AppliPokker/PF_Decision_Helper/MemoryTest.apk
 SceneListBegin?
 Assets/Scenes/HandSelect.unity
-Assets/Scenes/Table 3.unity
 Assets/Scenes/Table 5.unity
-Assets/Scenes/Table 4.unity
-Assets/Scenes/Table 6.unity
 SceneListEnd?
 c422dd62785a6d0afa870fbd111886ce Unity.TextMeshPro.dll:TMPro.TMP_SelectionCaret
 7b803eb2910e9b4cd5e521ae07b9f7d6 Unity.TextMeshPro.dll:TMPro.TMP_Dropdown

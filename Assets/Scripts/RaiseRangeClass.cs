@@ -14,7 +14,7 @@ public class RaiseRangeClass
 
     private static string BBVSSBCall = "TT-22, AJs-A2s, K8s+, Q8s+, J8s+, T7s+, 97s+, 87s, 76s, 65s, 54s, AJo-A6o, K9o+, Q9o+, J9o+, T9o, 98o";
     private static string BBVSSB3BetF = "AQs, K7s-K2s, 86s, 75s, 64s, AQo, A5o-A2o";
-    private static string BBVSSB3BetA = "AA, KK, QQ, JJ, AKo, AKs";
+    private static string BBVSSB3BetA = "AA, KK, QQ, JJ, AKo, AKs"; 
 
     // SB VS raise
     private static string SBVSEPCall = "AKs, AQs, AKo, AQo, QQ, JJ, TT, 99, 88, 77";
@@ -29,7 +29,7 @@ public class RaiseRangeClass
     private static string SBVSBU3BetA = "AKo, AKs, JJ+";
 
     // BB VS raise
-    private static string BBVSEPcall = "AQo+, AKs, AQs, QQ-22";
+    private static string BBVSEPCall = "AQo+, AKs, AQs, QQ-22";
     private static string BBVSEP3BetA = "KK+";
 
     private static string BBVSCOCall = "JJ-, AJo, AQo, KQo, KQs, AQs, QJs, KJs+, ATs, A9s, A8s, A7s, A6s, JJ-22";
@@ -160,6 +160,124 @@ public class RaiseRangeClass
         }
     }
 
+    public static string GetSBVSBUCall
+    {
+        get
+        {
+            return SBVSBUCall;
+        }
+    }
 
+    public static string GetSBVSBU3BetF
+    {
+        get
+        {
+            return SBVSBU3BetF;
+        }
+    }
+
+    public static string GetSBVSBU3BetA
+    {
+        get
+        {
+            return SBVSBU3BetA;
+        }
+    }
+
+    public static string GetBBVSEPCall
+    {
+        get
+        {
+            return BBVSEPCall;
+        }
+    }
+
+    public static string GetBBVSEP3BetA
+    {
+        get
+        {
+            return BBVSEP3BetA;
+        }
+    }
+
+    public static string GetBBVSCOCall
+    {
+        get
+        {
+            return BBVSCOCall;
+        }
+    }
+
+    public static string GetBBVSCO3BetF
+    {
+        get
+        {
+            return BBVSCO3BetF;
+        }
+    }
+
+    public static string GetBBVSCO3BetA
+    {
+        get
+        {
+            return BBVSCO3BetA;
+        }
+    }
+
+    public static string GetBBVSBUCall
+    {
+        get
+        {
+            return BBVSBUCall;
+        }
+    }
+
+    public static string GetBBVSBU3BetF
+    {
+        get
+        {
+            return BBVSBU3BetF;
+        }
+    }
+
+    public static string GetIPSqueezeCall
+    {
+        get
+        {
+            return IPSqueezeCall;
+        }
+    }
+
+    public static string GetIPSqueeze3Bet
+    {
+        get
+        {
+            return IPSqueeze3Bet;
+        }
+    }
+
+    public static string GetOOPSqueezeCall
+    {
+        get
+        {
+            return OOPSqueezeCall;
+        }
+    }
+
+    public static string GetOOPSqueezeCallBB
+    {
+        get
+        {
+            return OOPSqueezeCallBB;
+        }
+    }
+
+    public static string GetOOPSqueeze3Bet
+    {
+        get
+        {
+            return OOPSqueeze3Bet;
+        }
+    }
 }
 

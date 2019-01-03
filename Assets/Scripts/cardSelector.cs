@@ -10,6 +10,11 @@ public class cardSelector : MonoBehaviour
 
     string[] cardColor = { "h", "s", "d", "c" };
 
+    private void Start()
+    {
+        DisplayHeroCards();
+    }
+
     // Card panel selector
     public void CardValueSelector(string side)
     {
@@ -43,6 +48,7 @@ public class cardSelector : MonoBehaviour
         }
 
         ChangeCardColor(leftCard);
+        DisplayHeroCards();
     }
 
     // Decrease the color of a card by 1
@@ -64,6 +70,7 @@ public class cardSelector : MonoBehaviour
         }
 
         ChangeCardColor(leftCard);
+        DisplayHeroCards();
     }
 
     // Increase a card value by 1
@@ -85,6 +92,7 @@ public class cardSelector : MonoBehaviour
         }
 
         ChangeCardValue(leftCard);
+        DisplayHeroCards();
     }
 
     // Decrease a card value by 1
@@ -106,6 +114,7 @@ public class cardSelector : MonoBehaviour
         }
 
         ChangeCardValue(leftCard);
+        DisplayHeroCards();
     }
 
     // Change the value of the card via the arrows
@@ -122,6 +131,7 @@ public class cardSelector : MonoBehaviour
             txtCardValue = GameObject.Find("TxtCardR").GetComponent<Text>();
             txtCardValue.text = getCardName(PlayerPrefs.GetInt("cardValueR"));
         }
+        DisplayHeroCards();
     }
 
     // Change the value of the card from the selector
@@ -146,6 +156,7 @@ public class cardSelector : MonoBehaviour
         }
 
         panelCardSelector.SetActive(false); // Hide the selector window
+        DisplayHeroCards();
     }
 
     // Change the color of the card via the arrows
@@ -164,6 +175,7 @@ public class cardSelector : MonoBehaviour
             //txtCardColor.text = cardColor[PlayerPrefs.GetInt("cardColorR")];
             GameObject.Find("ImgCardR").GetComponent<Image>().sprite = Resources.Load<Sprite>("Cards/" + cardColor[PlayerPrefs.GetInt("cardColorR")]);
         }
+        DisplayHeroCards();
     }
 
     // Change the color of the card from the selector
@@ -190,6 +202,7 @@ public class cardSelector : MonoBehaviour
         }
 
         panelColorSelector.SetActive(false); // Hide the selector window
+        DisplayHeroCards();
     }
 
     // Transform a card value into a card name
@@ -248,6 +261,15 @@ public class cardSelector : MonoBehaviour
         }
 
         return result;
+    }
+
+    // Display the face up cards of hero
+    void DisplayHeroCards()
+    {       
+        string cardNameL = PlayerPrefs.GetInt("cardValueL").ToString() + cardColor[PlayerPrefs.GetInt("cardColorL")];
+        string cardNameR = PlayerPrefs.GetInt("cardValueR").ToString() + cardColor[PlayerPrefs.GetInt("cardColorR")];
+        GameObject.Find("0CardL").GetComponent<Image>().sprite = Resources.Load<Sprite>("Cards/" + cardNameL);
+        GameObject.Find("0CardR").GetComponent<Image>().sprite = Resources.Load<Sprite>("Cards/" + cardNameR);
     }
 }
 
