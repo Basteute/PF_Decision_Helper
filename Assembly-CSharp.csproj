@@ -65,7 +65,11 @@
     <Compile Include="Assets\Scripts\cardSelector.cs" />
     <Compile Include="Assets\Scripts\HomeNavigation.cs" />
     <Compile Include="Assets\Scripts\initScript.cs" />
+    <Compile Include="Assets\Scripts\initTableScript.cs" />
     <Compile Include="Assets\Scripts\IsoRangeClass.cs" />
+    <Compile Include="Assets\Scripts\Methods\commonMethods.cs" />
+    <Compile Include="Assets\Scripts\Methods\tableMethods.cs" />
+    <Compile Include="Assets\Scripts\NewEditorScript1.cs" />
     <Compile Include="Assets\Scripts\OpenRangeClass.cs" />
     <Compile Include="Assets\Scripts\PFDecisionMaker.cs" />
     <Compile Include="Assets\Scripts\PlayerSelector.cs" />

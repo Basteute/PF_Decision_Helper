@@ -1588,7 +1588,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Play hand
+  m_Text: Jouer la main
 --- !u!222 &273694720
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2678,7 +2678,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Number of player : 3'
+  m_Text: 'Nombre de joueurs : 3'
 --- !u!222 &475820809
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7570,7 +7570,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Preview :'
+  m_Text: "Pr\xE9-visualisation :"
 --- !u!222 &1871032862
 CanvasRenderer:
   m_ObjectHideFlags: 0

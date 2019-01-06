@@ -113,7 +113,7 @@ public class PFDecisionMaker : MonoBehaviour
 		{
 			if (TableDataClass.BetsByPosition[i] == 1)
                 numberOfBBCall++;
-			if (TableDataClass.BetsByPosition[i] > 1)
+			if (TableDataClass.BetsByPosition[i] > 1 && i != 0)
 				vilainOpened = true;
 		}
 		if(numberOfBBCall > 1)
@@ -218,13 +218,13 @@ public class PFDecisionMaker : MonoBehaviour
         ArrayList posOfRaisers = new ArrayList();
         for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
         {
-            if (TableDataClass.BetsByPosition[i] > maxRaise)
+            if (TableDataClass.BetsByPosition[i] > maxRaise && i != 0)
             {
                 maxRaise = (int) TableDataClass.BetsByPosition[i];
                 posOfRaisers.Clear();
                 posOfRaisers.Add(i);
             }
-            else if (TableDataClass.BetsByPosition[i] == maxRaise && maxRaise != 1)
+            else if (TableDataClass.BetsByPosition[i] == maxRaise && maxRaise != 1 && i != 0)
             {
                 posOfRaisers.Add(i);
             }
@@ -497,18 +497,18 @@ public class PFDecisionMaker : MonoBehaviour
                 result.Add(getCardName(i) + getCardName(i));
             }
         }
-        else if (splittedHand[0].Equals(splittedHand[1]) && splittedHand[3].Equals(splittedHand[4]))// deal with pocket pairs like QQ-22
-        {
-            for (int i = getCardNumber(splittedHand[0].ToString()); i >= getCardNumber(splittedHand[3].ToString()); i--)
-            {
-                result.Add(getCardName(i) + getCardName(i));
-            }
-        }
         else if ((bestCard - 1) == minCard)// Deal with connectors 
         {
             for (int i = minCard; i <= 13; i++)
             {
                 result.Add(getCardName(i + 1) + getCardName(i) + splittedHand[2]);
+            }
+        }
+        else if (splittedHand.Length > 4 && splittedHand[0].Equals(splittedHand[1]) && splittedHand[3].Equals(splittedHand[4]))// deal with pocket pairs like QQ-22
+        {
+            for (int i = getCardNumber(splittedHand[0].ToString()); i >= getCardNumber(splittedHand[3].ToString()); i--)
+            {
+                result.Add(getCardName(i) + getCardName(i));
             }
         }
         else if(splittedHand.Length > 6)// deal with hand like 97o-96o

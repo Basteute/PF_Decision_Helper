@@ -19,13 +19,12 @@ public class BtnTableManager : MonoBehaviour
     private void Start()
     {
         // Init bets and positions
-        initNamePosition();
-        initBetPosition();
+        initalNameByPosition = TableDataClass.initalNameByPosition;
+        initalBetByPosition = TableDataClass.initalBetByPosition;
+    }
 
-        // Set The first blinds
-        GameObject.Find("0BetPlayer").GetComponent<Image>().sprite = SB;
-        GameObject.Find("1BetPlayer").GetComponent<Image>().sprite = BB;
-
+    void initTable(int posBU)
+    {
         // Display the face up cards of hero
         string cardNameL = PlayerPrefs.GetInt("cardValueL").ToString() + cardColor[PlayerPrefs.GetInt("cardColorL")];
         string cardNameR = PlayerPrefs.GetInt("cardValueR").ToString() + cardColor[PlayerPrefs.GetInt("cardColorR")];
@@ -35,9 +34,9 @@ public class BtnTableManager : MonoBehaviour
         // Hide all the D tokens except the first one (at hero)
         for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
         {
-            GameObject BtnDealer = GameObject.Find("BtnD" + i.ToString());
             // Begin with hero as Dealer
-            if (i != 0)
+            GameObject BtnDealer = GameObject.Find("BtnD" + i.ToString());          
+            if (i != posBU)
             {
                 BtnDealer.GetComponent<Image>().color = new Color(1, 1, 1, 0);
                 BtnDealer.GetComponent<Button>().interactable = false;
@@ -45,33 +44,25 @@ public class BtnTableManager : MonoBehaviour
         }
 
         // Set the positions on table ("BU", "SB", "BB", "UTG" ...)
-        for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
+        if (posBU == 0)
         {
-            GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text = initalNameByPosition[i];
+            for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
+            {
+                GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text = initalNameByPosition[i];
+            }
         }
-
-        // Disable all button cards in vilain panel
-        for(int i = 1; i < TableDataClass.NumberOfPlayer; i++)
+        else
         {
-            GameObject.Find(i.ToString() + "BtnCardPlayer").GetComponent<Button>().interactable = false;
-            GameObject.Find(i.ToString() + "BtnPlayer").GetComponent<Button>().interactable = false;
+            // Move each player position
+            moveArrayStrNext(TableDataClass.NameByPosition);          
+            moveArrayFltNext(TableDataClass.BetsByPosition);   
+            
+            for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
+            {
+                GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[i];
+            }
         }
-
-        SetBetsOnTable();
     }
-
-    /*
-    // TEMPORAIRE (DEBUG)
-    private void Update()
-    {
-        string message = "BtnTable Manager | previous bet : ";
-        for(int i = 0; i < TableDataClass.PreviousBet.Count; i++)
-        {
-            message += TableDataClass.PreviousBet[i] + "  ";
-        }
-        Debug.Log(message);
-    }
-    */   
 
     // Open or close the panelDealer selector
     public void OpenDealerSetter()
@@ -96,7 +87,7 @@ public class BtnTableManager : MonoBehaviour
             DealerSetter(0);    
         }
  
-        GameObject.Find("TxtActionInfo").GetComponent<Text>().text = "Select a dealer";
+        GameObject.Find("TxtActionInfo").GetComponent<Text>().text = "Choisissez un Dealer";
         SetBetsOnTable();
     }
 
@@ -132,7 +123,7 @@ public class BtnTableManager : MonoBehaviour
             // Set the positions on table ("BU", "SB", "BB", "UTG" ...)
             TableDataClass.NameByPosition = initalNameByPosition;
             for (int i = 0; i < position; i++)
-                TableDataClass.NameByPosition = moveNext(TableDataClass.NameByPosition);
+                TableDataClass.NameByPosition = moveArrayStrNext(TableDataClass.NameByPosition);
 
             for (int i = 0; i < numberOfPlayer; i++)
                 GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[i];
@@ -222,11 +213,13 @@ public class BtnTableManager : MonoBehaviour
         {
             GameObject.Find("TxtCurrentPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[TableDataClass.GetIndexOfPosition("BU")];
             SetCurrentPlayer(TableDataClass.GetIndexOfPosition("BU"));
+            TableDataClass.CurrentPlayer = "BU";
         }
         else
         {
             GameObject.Find("TxtCurrentPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[TableDataClass.GetIndexOfPosition("BB") + 1];
             SetCurrentPlayer(3);
+            TableDataClass.CurrentPlayer = TableDataClass.NameByPosition[TableDataClass.GetIndexOfPosition("BB") + 1]; ;
         }
 
         // Set SB and BB bets
@@ -276,7 +269,6 @@ public class BtnTableManager : MonoBehaviour
         else if(TableDataClass.NumberOfPlayer == 7) initalNameByPosition = new string[] { "BU", "SB", "BB", "UTG1", "UTG2", "CO" };
         else if(TableDataClass.NumberOfPlayer == 8) initalNameByPosition = new string[] { "BU", "SB", "BB", "UTG1", "UTG2", "MP1", "CO" };
         else if(TableDataClass.NumberOfPlayer == 9) initalNameByPosition = new string[] { "BU", "SB", "BB", "UTG1", "UTG2", "MP1", "MP2", "CO" };
-        TableDataClass.NameByPosition = initalNameByPosition;
     }
 
     void initBetPosition()
@@ -289,13 +281,27 @@ public class BtnTableManager : MonoBehaviour
         else if (TableDataClass.NumberOfPlayer == 7) initalBetByPosition = new float[] { 0, 0.5f, 1, 0, 0, 0, 0 };
         else if (TableDataClass.NumberOfPlayer == 8) initalBetByPosition = new float[] { 0, 0.5f, 1, 0, 0, 0, 0, 0};
         else if (TableDataClass.NumberOfPlayer == 9) initalBetByPosition = new float[] { 0, 0.5f, 1, 0, 0, 0, 0, 0, 0 };
-        TableDataClass.BetsByPosition = initalBetByPosition;
     }
 
-    string[] moveNext(string[] array)
+    string[] moveArrayStrNext(string[] array)
     {
         // init the final array
         string[] result = new string[array.Length];
+        result[0] = array[array.Length - 1];
+
+        // fill the final array
+        for (int i = 1; i < array.Length; i++)
+        {
+            result[i] = array[i - 1];
+        }
+
+        return result;
+    }
+
+    float[] moveArrayFltNext(float[] array)
+    {
+        // init the final array
+        float[] result = new float[array.Length];
         result[0] = array[array.Length - 1];
 
         // fill the final array
@@ -377,6 +383,8 @@ public class BtnTableManager : MonoBehaviour
 
         // Change the name of the current player on the board
         GameObject.Find("TxtCurrentPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[playerID];
+
+        TableDataClass.CurrentPlayer = TableDataClass.NameByPosition[playerID];
     }
 }
 /*

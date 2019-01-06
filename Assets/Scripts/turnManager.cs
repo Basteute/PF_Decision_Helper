@@ -9,12 +9,17 @@ public class turnManager : MonoBehaviour
 
     private void Start()
     {
-        initFoldByPosition();
+        //initFoldByPosition();
 
-        if (TableDataClass.NumberOfPlayer == 3)
+        // Set the current player
+        if (TableDataClass.NumberOfPlayer == TableDataClass.GetIndexOfPosition("BU") + 3)
             SetCurrentPlayer(0);
+        else if ((TableDataClass.NumberOfPlayer + 1 == TableDataClass.GetIndexOfPosition("BU") + 3))
+            SetCurrentPlayer(1);
+        else if((TableDataClass.NumberOfPlayer + 2 == TableDataClass.GetIndexOfPosition("BU") + 3))
+            SetCurrentPlayer(2);
         else
-            SetCurrentPlayer(3);
+            SetCurrentPlayer(TableDataClass.GetIndexOfPosition("BU") + 3);
 
         // init for Undo button
         if(TableDataClass.PreviousBet.Count == 0)

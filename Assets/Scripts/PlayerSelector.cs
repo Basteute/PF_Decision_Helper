@@ -8,7 +8,7 @@ public class PlayerSelector : MonoBehaviour
     private void Start()
     {
         // Change the text
-        GameObject.Find("TxtPlayerNumber").GetComponent<Text>().text = "Number of player : " + TableDataClass.NumberOfPlayer.ToString();
+        GameObject.Find("TxtPlayerNumber").GetComponent<Text>().text = "Nombre de joueurs : " + TableDataClass.NumberOfPlayer.ToString();
     }
 
     // Change the number of player
@@ -27,7 +27,12 @@ public class PlayerSelector : MonoBehaviour
             TableDataClass.NumberOfPlayer = 3;
 
         // Change the text
-        GameObject.Find("TxtPlayerNumber").GetComponent<Text>().text = "Number of player : " + TableDataClass.NumberOfPlayer.ToString();
+        GameObject.Find("TxtPlayerNumber").GetComponent<Text>().text = "Nombre de joueurs : " + TableDataClass.NumberOfPlayer.ToString();
+
+        // Change the number of player in the arrays
+        TableDataClass.initNamePosition();
+        TableDataClass.initBetPosition();
+        TableDataClass.initFoldByPosition();
     }
 
 }

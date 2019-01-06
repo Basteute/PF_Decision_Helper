@@ -32,7 +32,7 @@ public class RaiseRangeClass
     private static string BBVSEPCall = "AQo+, AKs, AQs, QQ-22";
     private static string BBVSEP3BetA = "KK+";
 
-    private static string BBVSCOCall = "JJ-, AJo, AQo, KQo, KQs, AQs, QJs, KJs+, ATs, A9s, A8s, A7s, A6s, JJ-22";
+    private static string BBVSCOCall = "JJ-22, AJo, AQo, KQo, KQs, AQs, QJs, KJs+, ATs, A9s, A8s, A7s, A6s, JJ-22";
     private static string BBVSCO3BetF = "T9o, JTs, QTs, KTs, A5o-A2o";
     private static string BBVSCO3BetA = "QQ+,AKo,AKs";
 

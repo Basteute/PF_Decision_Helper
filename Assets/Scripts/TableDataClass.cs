@@ -10,7 +10,10 @@ public static class TableDataClass
     private static bool[] foldByPosition;
     private static ArrayList previousAction = new ArrayList();
     private static ArrayList previousBet = new ArrayList();
-    private static string currentPlayer;
+    private static string currentPlayer = null;
+    public static string [] initalNameByPosition;
+    public static bool[] initalFoldByPosition;
+    public static float [] initalBetByPosition;
 
     // Who has bet and how much
     public static float[] BetsByPosition
@@ -50,7 +53,6 @@ public static class TableDataClass
             numberOfPlayer = value;
         }
     }
-
 
     public static bool [] FoldByPosition
     {
@@ -114,4 +116,42 @@ public static class TableDataClass
         return result;
     }
 
+    public static void initNamePosition()
+    {
+        if (NumberOfPlayer == 2) initalNameByPosition = new string[] { "BU", "BB" };
+        else if (NumberOfPlayer == 3) initalNameByPosition = new string[] { "BU", "SB", "BB" };
+        else if (NumberOfPlayer == 4) initalNameByPosition = new string[] { "BU", "SB", "BB", "CO" };
+        else if (NumberOfPlayer == 5) initalNameByPosition = new string[] { "BU", "SB", "BB", "UTG", "CO" };
+        else if (NumberOfPlayer == 6) initalNameByPosition = new string[] { "BU", "SB", "BB", "UTG", "HJ", "CO" };
+        else if (NumberOfPlayer == 7) initalNameByPosition = new string[] { "BU", "SB", "BB", "UTG1", "UTG2", "CO" };
+        else if (NumberOfPlayer == 8) initalNameByPosition = new string[] { "BU", "SB", "BB", "UTG1", "UTG2", "MP1", "CO" };
+        else if (NumberOfPlayer == 9) initalNameByPosition = new string[] { "BU", "SB", "BB", "UTG1", "UTG2", "MP1", "MP2", "CO" };
+        nameByPosition = initalNameByPosition;
+    }
+
+    public static void initBetPosition()
+    {
+        if (NumberOfPlayer == 2) initalBetByPosition = new float[] { 0.5f, 1 };
+        else if (NumberOfPlayer == 3) initalBetByPosition = new float[] { 0, 0.5f, 1 };
+        else if (NumberOfPlayer == 4) initalBetByPosition = new float[] { 0, 0.5f, 1, 0 };
+        else if (NumberOfPlayer == 5) initalBetByPosition = new float[] { 0, 0.5f, 1, 0, 0 };
+        else if (NumberOfPlayer == 6) initalBetByPosition = new float[] { 0, 0.5f, 1, 0, 0, 0 };
+        else if (NumberOfPlayer == 7) initalBetByPosition = new float[] { 0, 0.5f, 1, 0, 0, 0, 0 };
+        else if (NumberOfPlayer == 8) initalBetByPosition = new float[] { 0, 0.5f, 1, 0, 0, 0, 0, 0 };
+        else if (NumberOfPlayer == 9) initalBetByPosition = new float[] { 0, 0.5f, 1, 0, 0, 0, 0, 0, 0 };
+        betsByPosition = initalBetByPosition;
+    }
+
+    public static void initFoldByPosition()
+    {
+        if (NumberOfPlayer == 2) initalFoldByPosition = new bool[] { false, false };
+        else if (NumberOfPlayer == 3) initalFoldByPosition = new bool[] { false, false, false };
+        else if (NumberOfPlayer == 4) initalFoldByPosition = new bool[] { false, false, false, false };
+        else if (NumberOfPlayer == 5) initalFoldByPosition = new bool[] { false, false, false, false, false };
+        else if (NumberOfPlayer == 6) initalFoldByPosition = new bool[] { false, false, false, false, false, false };
+        else if (NumberOfPlayer == 7) initalFoldByPosition = new bool[] { false, false, false, false, false, false, false };
+        else if (NumberOfPlayer == 8) initalFoldByPosition = new bool[] { false, false, false, false, false, false, false, false };
+        else if (NumberOfPlayer == 9) initalFoldByPosition = new bool[] { false, false, false, false, false, false, false, false, false };
+        foldByPosition = initalFoldByPosition;
+    }
 }
