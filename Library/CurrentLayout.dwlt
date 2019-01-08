@@ -20,7 +20,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 950, y: 321}
+  m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -88,10 +88,10 @@ MonoBehaviour:
     y: 30
     width: 1280
     height: 587
-  m_MinSize: {x: 911, y: 271}
-  m_MaxSize: {x: 22006, y: 10021}
+  m_MinSize: {x: 917, y: 271}
+  m_MaxSize: {x: 22012, y: 10021}
   vertical: 0
-  controlID: 81
+  controlID: 89
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -130,8 +130,8 @@ MonoBehaviour:
     y: 0
     width: 206
     height: 587
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 204, y: 221}
+  m_MaxSize: {x: 4004, y: 4021}
   m_ActualView: {fileID: 10}
   m_Panes:
   - {fileID: 10}
@@ -180,8 +180,8 @@ MonoBehaviour:
     y: 0
     width: 280
     height: 587
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 277, y: 71}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 11}
   m_Panes:
   - {fileID: 11}
@@ -205,8 +205,8 @@ MonoBehaviour:
     y: 0
     width: 557
     height: 587
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 13}
@@ -242,7 +242,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 8ec1feff16ccfeff88d3feff76dbfeff72e2feff84ecfefff4f3feff4e02ffff742bffff642dffff1c36ffff9253ffffcc53ffff0654ffff0854ffff585effff925effff945effff726dffff746dfffff88dffffd492ffffaa94ffffba95ffff3297ffffa098ffff809cffffca9fffffd0a2ffff48a5ffff56a6ffffc2baffff44c9ffff36dbffff06f1ffff40f1ffff42f1ffffe4fbffff00000000e0340000e8340000563500007e360000da3600009a6500000e6700001e6700009e7a00000c7b0000907c0000865101008e510100f25101001a5301007c530100ae550100b6550100245601004c570100a8570100c4570100cc5701003658010066590100c2590100866c0100146d01005c6d0100de6d0100126e0100be7001008e7101000e72010042720100e0740100b0750100307601006a76010004790100ae790100267a0100527a0100b67c0100447d01000e7e0100427e0100d47e01005c7f01002480010058800100f68201007e83010046840100808401001a870100908701003c88010068880100c68a0100448b0100ce8b0100aa8c01005c8d0100
+    m_ExpandedIDs: 4aafffffb4b0ffff92b1ffff78b3fffff0b3ffff2eb4ffff74b4ffff78b4ffff0afbffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -336,20 +336,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Scripts
   m_ViewMode: 1
   m_StartGridSize: 32
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Scripts
   m_LastFoldersGridSize: 32
   m_LastProjectPath: C:\Users\bflury\Documents\ISEN\Projets dev\AppliPokker\PF_Decision_Helper
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 582a0000
-    m_LastClickedID: 10840
-    m_ExpandedIDs: 000000000a2a0000122a0000802c000000ca9a3b
+    m_SelectedIDs: 722a0000
+    m_LastClickedID: 10866
+    m_ExpandedIDs: 000000006a2a0000722a0000d82c000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -377,7 +377,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000000a2a0000122a0000802c0000
+    m_ExpandedIDs: 000000006a2a0000722a0000d82c0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -467,10 +467,10 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -720
-    m_HBaseRangeMax: 720
-    m_VBaseRangeMin: -360
-    m_VBaseRangeMax: 360
+    m_HBaseRangeMin: -160
+    m_HBaseRangeMax: 160
+    m_VBaseRangeMin: -266.6667
+    m_VBaseRangeMax: 266.6667
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -503,7 +503,7 @@ MonoBehaviour:
       width: 1419.5382
       height: 1404.1918
     m_MinimalGUI: 1
-  m_defaultScale: 0.38541666
+  m_defaultScale: 1
   m_TargetTexture: {fileID: 0}
   m_CurrentColorSpace: 0
   m_LastWindowPixelSize: {x: 832.5, y: 849}
