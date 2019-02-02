@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class PFDecisionMaker : MonoBehaviour
 {
     public GameObject panelDealerSetter;
-    bool displayDecision = true;
 
     private void Update()
     {      
@@ -23,21 +22,20 @@ public class PFDecisionMaker : MonoBehaviour
             else
                 heroHand += "o";
         }
-        string decision = PFDecision(heroHand);
-        if (!panelDealerSetter.activeSelf)
-            GameObject.Find("Decision").GetComponent<Text>().text = decision;
-        else
-            GameObject.Find("Decision").GetComponent<Text>().text = "";
 
+        string decision = PFDecision(heroHand);
+        string textToDisplay = "";
         // Display Extra info about the adviced action
         switch(decision)
         {
             case "Relance d'ouverture":
                 GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Mise recommandée : 3 grosses blindes";
+                textToDisplay = "Relance : 3 BB";
                 break;
 
             case "fold":
                 GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Il est recommandé de coucher cette main dans cette position";
+                textToDisplay = "Se coucher";
                 break;
 
             case "Iso raise":
@@ -48,45 +46,60 @@ public class PFDecisionMaker : MonoBehaviour
                         numberOfLimp++;
                 
                 GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Iso raise classique : 3 grosse blindes + 1 pour chaque limp\n" + "Mise recommandée : " + (3 + numberOfLimp).ToString() + " BB";
+                textToDisplay = "Relance : " + (3 + numberOfLimp).ToString() + " BB";
                 break;
 
             case "Vous pouvez suivre ou vous coucher":
                 GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Suivre ne vous coute pas chère, cependant se coucher reste viable";
+                textToDisplay = "Vous pouvez suivre ou vous coucher";
                 break;
 
             case "Squeeze":
                 GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Squeeze standard : 4x la mise de l'adversaire";
+                textToDisplay = "Relance : 4x la mise de l'adversaire";
                 break;
 
             case "Relance":
                 GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Relance standard : 3x la mise de l'adversaire";
+                textToDisplay = "Relance : 3x la mise de l'adversaire";
                 break;
 
             case "Relance forte":
                 GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Relance standard : 3x la mise de l'adversaire \n si l'adversaire sur-relance, partez à tapis";
+                textToDisplay = "3 Bet / All in";
                 break;
 
             case "Relance faible":
                 GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Relance standard : 3x la mise de l'adversaire \n si l'adversaire sur-relance, couchez votre main";
+                textToDisplay = "3 Bet / Fold";
                 break;
 
             case "Suivre la relance":
                 GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Il est conseillé de simplement suivre la mise de votre adversaire";
+                textToDisplay = "Suivre la relance";
                 break;
 
             case "Suivre les relances":
                 GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Il est conseillé de simplement suivre la mise de vos adversaires";
+                textToDisplay = "Suivre les relances";
                 break;
 
             case "Les décisions en cas de 4Bet (sur-sur-relance) ne sont pas calculées par cette application":
                 GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Dans cette situation, il est préférable de ne jouer le coup qu'avec une main très forte";
+                textToDisplay = "Les décisions en cas de 4Bet (sur-sur-relance) ne sont pas calculées par cette application";
                 break;
 
             default:
                 GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "";
+                textToDisplay = "";
                 break;
-
         }
+
+        // Display the decision
+        if (!panelDealerSetter.activeSelf)
+            GameObject.Find("Decision").GetComponent<Text>().text = textToDisplay;
+        else
+            GameObject.Find("Decision").GetComponent<Text>().text = "";
     }
 
     public void BtnTest(string range)

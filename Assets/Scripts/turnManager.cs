@@ -25,7 +25,7 @@ public class turnManager : MonoBehaviour
         if(TableDataClass.PreviousBet.Count == 0)
         {
             TableDataClass.PreviousBet.Add(0.5f);
-            TableDataClass.PreviousBet.Add(1);
+            TableDataClass.PreviousBet.Add(1f);
         }
     }
 
@@ -57,7 +57,7 @@ public class turnManager : MonoBehaviour
 
         // Increase the players's bet
         int[] maxBet = maxBetOnTable();
-        TableDataClass.BetsByPosition[index] = maxBet[0] + 1;
+        TableDataClass.BetsByPosition[index] = maxBet[0] + 1f;
 
         // Change the current player
         if (index == TableDataClass.NumberOfPlayer - 1)
@@ -77,7 +77,7 @@ public class turnManager : MonoBehaviour
 
         // Call
         int[] maxBet = maxBetOnTable();
-        TableDataClass.BetsByPosition[index] = maxBet[0];
+        TableDataClass.BetsByPosition[index] = (float)maxBet[0];
 
         // Change the current player
         if (index == TableDataClass.NumberOfPlayer - 1)
@@ -123,12 +123,12 @@ public class turnManager : MonoBehaviour
                 }
 
                 if (TableDataClass.PreviousAction.Count >= TableDataClass.NumberOfPlayer - 1)
-                {                 
+                {
                     TableDataClass.BetsByPosition[previousPlayer] = (float)TableDataClass.PreviousBet[TableDataClass.PreviousAction.Count - (TableDataClass.NumberOfPlayer - 1)];
                 }
                 else
                 {
-                    TableDataClass.BetsByPosition[previousPlayer] = 0;
+                    TableDataClass.BetsByPosition[previousPlayer] = 0f;
                 }
 
                 TableDataClass.PreviousBet.RemoveAt(TableDataClass.PreviousBet.Count - 1);
@@ -227,22 +227,22 @@ public class turnManager : MonoBehaviour
                 betPlayer.GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/SB");
                 betPlayer.GetComponent<Image>().color = new Color(1, 1, 1, 1);
             }
-            else if (TableDataClass.BetsByPosition[i] == 1)
+            else if (TableDataClass.BetsByPosition[i] == 1f)
             {
                 betPlayer.GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/BB");
                 betPlayer.GetComponent<Image>().color = new Color(1, 1, 1, 1);
             }
-            else if (TableDataClass.BetsByPosition[i] == 2)
+            else if (TableDataClass.BetsByPosition[i] == 2f)
             {
                 betPlayer.GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/orangeChip");
                 betPlayer.GetComponent<Image>().color = new Color(1, 1, 1, 1);
             }
-            else if (TableDataClass.BetsByPosition[i] == 3)
+            else if (TableDataClass.BetsByPosition[i] == 3f)
             {
                 betPlayer.GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/blueChip");
                 betPlayer.GetComponent<Image>().color = new Color(1, 1, 1, 1);
             }
-            else if (TableDataClass.BetsByPosition[i] == 4)
+            else if (TableDataClass.BetsByPosition[i] == 4f)
             {
                 betPlayer.GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/yellowChip");
                 betPlayer.GetComponent<Image>().color = new Color(1, 1, 1, 1);

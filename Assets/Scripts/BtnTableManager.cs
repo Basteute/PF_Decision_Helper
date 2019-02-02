@@ -139,7 +139,6 @@ public class BtnTableManager : MonoBehaviour
             TableDataClass.PreviousBet.Add(1);
 
             // Set the SB, BB and the current player
-            Sprite mySB = Resources.Load<Sprite>("Resources/Icons/SB");
             if (position + 1 == numberOfPlayer)
             {
                 ResetBets(0, 1);
@@ -175,6 +174,13 @@ public class BtnTableManager : MonoBehaviour
             OpenDealerSetter();
         }
 
+        // init for Undo button
+        if (TableDataClass.PreviousBet.Count == 0)
+        {
+            TableDataClass.PreviousBet.Add(0.5f);
+            TableDataClass.PreviousBet.Add(1);
+        }
+
         SetBetsOnTable();
     }
 
@@ -184,7 +190,8 @@ public class BtnTableManager : MonoBehaviour
 
         // reset bets and names by position
         TableDataClass.NameByPosition = initalNameByPosition;
-        initBetPosition();
+        TableDataClass.BetsByPosition = initalBetByPosition;
+        //initBetPosition();      
 
         // reset the board
         GameObject.Find("ImgCall").GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/BB");
@@ -241,6 +248,11 @@ public class BtnTableManager : MonoBehaviour
                 BtnDealer.GetComponent<Button>().interactable = true;
             }
         }
+
+        // init for Undo button
+        TableDataClass.PreviousBet.Clear();
+        TableDataClass.PreviousBet.Add(0.5f);
+        TableDataClass.PreviousBet.Add(1);
 
         SetBetsOnTable();
     }
