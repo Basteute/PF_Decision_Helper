@@ -8,7 +8,7 @@ public class PFDecisionMaker : MonoBehaviour
     public GameObject panelDealerSetter;
 
     private void Update()
-    {      
+    {
         // Enter Hero's hand
         int bestHeroCard = Mathf.Max(PlayerPrefs.GetInt("cardValueR"), PlayerPrefs.GetInt("cardValueL"));
         int minHeroCard = Mathf.Min(PlayerPrefs.GetInt("cardValueR"), PlayerPrefs.GetInt("cardValueL"));
@@ -25,7 +25,7 @@ public class PFDecisionMaker : MonoBehaviour
 
         string decision = PFDecision(heroHand);
         string textToDisplay = "";
-        // Display Extra info about the adviced action
+        // Display the decision (TxtExtraInfo is invisible)
         switch(decision)
         {
             case "Relance d'ouverture":
@@ -41,10 +41,10 @@ public class PFDecisionMaker : MonoBehaviour
             case "Iso raise":
                 // find the number of limper
                 float numberOfLimp = 0;
-                for(int i = 1; i < TableDataClass.NumberOfPlayer; i++)           
+                for(int i = 1; i < TableDataClass.NumberOfPlayer; i++)
                     if (TableDataClass.BetsByPosition[i] == 1.0)
                         numberOfLimp++;
-                
+
                 GameObject.Find("TxtExtraInfo").GetComponent<Text>().text = "Iso raise classique : 3 grosse blindes + 1 pour chaque limp\n" + "Mise recommandée : " + (3 + numberOfLimp).ToString() + " BB";
                 textToDisplay = "Relance : " + (3 + numberOfLimp).ToString() + " BB";
                 break;
@@ -112,7 +112,7 @@ public class PFDecisionMaker : MonoBehaviour
         }
         GameObject.Find("TxtText").GetComponent<Text>().text = result;
     }
-    
+
     // return the adviced Pre-Flop decision "call", "3BetFold", "3BetALL", "open" or "fold"
     string PFDecision(string hand)
     {
@@ -121,22 +121,29 @@ public class PFDecisionMaker : MonoBehaviour
         // check if anyone has opened before hero THIS DOES NOT HANDLE HEADS UP
         int numberOfPlayer = TableDataClass.NumberOfPlayer;
         bool vilainOpened = false;
-		int numberOfBBCall = 0;
-		for (int i = 0; i < numberOfPlayer; i++)
-		{
-			if (TableDataClass.BetsByPosition[i] == 1)
-                numberOfBBCall++;
-			if (TableDataClass.BetsByPosition[i] > 1 && i != 0)
-				vilainOpened = true;
-		}
-		if(numberOfBBCall > 1)
-			vilainOpened = true;
+    		int numberOfBBCall = 0;
+    		for (int i = 0; i < numberOfPlayer; i++)
+    		{
+    			if (TableDataClass.BetsByPosition[i] == 1)
+                    numberOfBBCall++;
+    			if (TableDataClass.BetsByPosition[i] > 1 && i != 0)
+    				vilainOpened = true;
+    		}
+    		if(numberOfBBCall > 1)
+    			vilainOpened = true;
 
         // select the advice decision regarding it's an open raise or not
         if (!vilainOpened)
+        {
+          if("BB" == TableDataClass.NameByPosition[0])
+            result = "";
+          else
             result = getOpenDecision(hand);
+        }
         else
-            result = getRaiseDecision(hand);
+        {
+          result = getRaiseDecision(hand);
+        }
 
         return result;
     }
@@ -264,11 +271,11 @@ public class PFDecisionMaker : MonoBehaviour
         // Check if hero is IP or OOP
         bool IP = true;
         int indexOfBU = TableDataClass.GetIndexOfPosition("BU");
-        for(int i = 0; i < posOfRaisers.Count; i++)        
+        for(int i = 0; i < posOfRaisers.Count; i++)
             if (((int)posOfRaisers[i] - indexOfBU) < TableDataClass.GetIndexOfPosition(TableDataClass.NameByPosition[0]))
                 IP = false;
 
-        // Get the decision 
+        // Get the decision
         if(IP)
         {
             if (compareHandWithRange(hand, RaiseRangeClass.GetIPSqueezeCall))
@@ -289,7 +296,7 @@ public class PFDecisionMaker : MonoBehaviour
             else
                 result = "fold";
         }
-       
+
         return result;
     }
 
@@ -325,11 +332,11 @@ public class PFDecisionMaker : MonoBehaviour
 
         // Check if hero is IP or OOP
         bool IP = true;
-        int indexOfBU = TableDataClass.GetIndexOfPosition("BU");     
+        int indexOfBU = TableDataClass.GetIndexOfPosition("BU");
         if ((posOfRaiser - indexOfBU) < TableDataClass.GetIndexOfPosition(posOfHero))
                 IP = false;
 
-        // Get the decision 
+        // Get the decision
         if (IP)
         {
             // BU
@@ -449,10 +456,10 @@ public class PFDecisionMaker : MonoBehaviour
                 return true;
 
         return result;
-        
+
     }
 
-    // "A2s+, K2s+, 88+" => un tableau de mains 
+    // "A2s+, K2s+, 88+" => un tableau de mains
     ArrayList getRangeFromString(string range)
     {
         // Split the range into an arrayList
@@ -471,7 +478,7 @@ public class PFDecisionMaker : MonoBehaviour
             {
                 tokenRange.Add(hand);
                 hand = "";
-            }  
+            }
         }
         tokenRange.Add(hand);
 
@@ -510,7 +517,7 @@ public class PFDecisionMaker : MonoBehaviour
                 result.Add(getCardName(i) + getCardName(i));
             }
         }
-        else if ((bestCard - 1) == minCard)// Deal with connectors 
+        else if ((bestCard - 1) == minCard)// Deal with connectors
         {
             for (int i = minCard; i <= 13; i++)
             {

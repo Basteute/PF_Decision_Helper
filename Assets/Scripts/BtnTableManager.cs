@@ -35,7 +35,7 @@ public class BtnTableManager : MonoBehaviour
         for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
         {
             // Begin with hero as Dealer
-            GameObject BtnDealer = GameObject.Find("BtnD" + i.ToString());          
+            GameObject BtnDealer = GameObject.Find("BtnD" + i.ToString());
             if (i != posBU)
             {
                 BtnDealer.GetComponent<Image>().color = new Color(1, 1, 1, 0);
@@ -54,9 +54,9 @@ public class BtnTableManager : MonoBehaviour
         else
         {
             // Move each player position
-            moveArrayStrNext(TableDataClass.NameByPosition);          
-            moveArrayFltNext(TableDataClass.BetsByPosition);   
-            
+            moveArrayStrNext(TableDataClass.NameByPosition);
+            moveArrayFltNext(TableDataClass.BetsByPosition);
+
             for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
             {
                 GameObject.Find(i.ToString() + "TxtPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[i];
@@ -84,9 +84,9 @@ public class BtnTableManager : MonoBehaviour
         }
         else
         {
-            DealerSetter(0);    
+            DealerSetter(0);
         }
- 
+
         GameObject.Find("TxtActionInfo").GetComponent<Text>().text = "Choisissez un Dealer";
         SetBetsOnTable();
     }
@@ -134,6 +134,8 @@ public class BtnTableManager : MonoBehaviour
 
             // init for Undo button
             TableDataClass.PreviousAction.Clear();
+            TableDataClass.PreviousAction.Add("SB"); // Test
+            TableDataClass.PreviousAction.Add("BB"); // Test
             TableDataClass.PreviousBet.Clear();
             TableDataClass.PreviousBet.Add(0.5f);
             TableDataClass.PreviousBet.Add(1);
@@ -191,12 +193,12 @@ public class BtnTableManager : MonoBehaviour
         // reset bets and names by position
         TableDataClass.NameByPosition = initalNameByPosition;
         TableDataClass.BetsByPosition = initalBetByPosition;
-        //initBetPosition();      
+        //initBetPosition();
 
         // reset the board
         GameObject.Find("ImgCall").GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/BB");
         GameObject.Find("ImgRaise").GetComponent<Image>().sprite = Resources.Load<Sprite>("Icons/orangeChip");
-       
+
         for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
         {
             // fill the current list of player on the table
@@ -215,7 +217,7 @@ public class BtnTableManager : MonoBehaviour
             }
         }
 
-        // change the current player on the board           
+        // change the current player on the board
         if (TableDataClass.NumberOfPlayer == 3)
         {
             GameObject.Find("TxtCurrentPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[TableDataClass.GetIndexOfPosition("BU")];
@@ -228,6 +230,9 @@ public class BtnTableManager : MonoBehaviour
             SetCurrentPlayer(3);
             TableDataClass.CurrentPlayer = TableDataClass.NameByPosition[TableDataClass.GetIndexOfPosition("BB") + 1]; ;
         }
+
+        // Set the last player
+        TableDataClass.LastPlayer = TableDataClass.CurrentPlayer;
 
         // Set SB and BB bets
         GameObject.Find("1BetPlayer").GetComponent<Image>().sprite = SB;
@@ -253,6 +258,9 @@ public class BtnTableManager : MonoBehaviour
         TableDataClass.PreviousBet.Clear();
         TableDataClass.PreviousBet.Add(0.5f);
         TableDataClass.PreviousBet.Add(1);
+        TableDataClass.PreviousAction.Clear();
+        TableDataClass.PreviousAction.Add("SB"); // Test
+        TableDataClass.PreviousAction.Add("BB"); // Test
 
         SetBetsOnTable();
     }
@@ -272,7 +280,7 @@ public class BtnTableManager : MonoBehaviour
     }
 
     void initNamePosition()
-    {   
+    {
         if (TableDataClass.NumberOfPlayer == 2)     initalNameByPosition = new string[] { "BU", "BB" };
         else if(TableDataClass.NumberOfPlayer == 3) initalNameByPosition = new string[] { "BU", "SB", "BB" };
         else if(TableDataClass.NumberOfPlayer == 4) initalNameByPosition = new string[] { "BU", "SB", "BB", "CO" };
@@ -326,7 +334,7 @@ public class BtnTableManager : MonoBehaviour
     }
 
     void SetBetsOnTable()
-    { 
+    {
         // Set the bets
         for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
         {
@@ -368,9 +376,9 @@ public class BtnTableManager : MonoBehaviour
     public void SetCurrentPlayer(int playerID)
     {
         // Erase all the previous highlight
-        for(int i = 0; i < TableDataClass.NumberOfPlayer; i++)     
+        for(int i = 0; i < TableDataClass.NumberOfPlayer; i++)
             GameObject.Find(i.ToString() + "PanelPlayer").GetComponent<Image>().color = new Color(1, 1, 0.67f, 0);
-        
+
 
         // Skip the players who have fold
         for (int i = 0; i < TableDataClass.NumberOfPlayer; i++)
@@ -402,6 +410,6 @@ public class BtnTableManager : MonoBehaviour
 /*
 for(int i = 0; i < TableDataClass.NumberOfPlayer; i++)
 {
-	
+
 }
 */

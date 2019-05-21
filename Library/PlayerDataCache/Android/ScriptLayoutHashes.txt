@@ -1,6 +1,6 @@
 Android
 PlayerPath?
-D:/Projets_dev/PF_Decision_Helper/PF_Decision_Helper(french).apk
+C:/Users/bflury/Documents/ISEN/Projets dev/AppliPokker/PF_Decision_Helper/PF_Decision_Helper(french).apk
 SceneListBegin?
 Assets/Scenes/HandSelect.unity
 Assets/Scenes/Table 3.unity

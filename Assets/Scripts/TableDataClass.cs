@@ -11,9 +11,13 @@ public static class TableDataClass
     private static ArrayList previousAction = new ArrayList();
     private static ArrayList previousBet = new ArrayList();
     private static string currentPlayer = null;
+    private static string lastPlayer = "";
     public static string [] initalNameByPosition;
     public static bool[] initalFoldByPosition;
     public static float [] initalBetByPosition;
+    public static ArrayList playersHistory = new ArrayList();
+    public static ArrayList actionsHistory = new ArrayList();
+    public static ArrayList betsHistory = new ArrayList();
 
     // Who has bet and how much
     public static float[] BetsByPosition
@@ -103,16 +107,28 @@ public static class TableDataClass
         }
     }
 
+    public static string LastPlayer
+    {
+        get
+        {
+            return lastPlayer;
+        }
+        set
+        {
+            lastPlayer = value;
+        }
+    }
+
     // Return the index of "BB" for instance
     public static int GetIndexOfPosition(string position)
     {
         int result = -1;
 
-        for(int i = 0; i < numberOfPlayer; i++)       
-            if(position.Equals(nameByPosition[i]))        
+        for(int i = 0; i < numberOfPlayer; i++)
+            if(position.Equals(nameByPosition[i]))
                 return i;
-            
-        
+
+
         return result;
     }
 
@@ -153,5 +169,44 @@ public static class TableDataClass
         else if (NumberOfPlayer == 8) initalFoldByPosition = new bool[] { false, false, false, false, false, false, false, false };
         else if (NumberOfPlayer == 9) initalFoldByPosition = new bool[] { false, false, false, false, false, false, false, false, false };
         foldByPosition = initalFoldByPosition;
+    }
+
+    // history of players for Undo button
+    public static ArrayList PlayersHistory
+    {
+        get
+        {
+            return playersHistory;
+        }
+        set
+        {
+            playersHistory = value;
+        }
+    }
+
+    // history of actions for Undo button
+    public static ArrayList ActionsHistory
+    {
+        get
+        {
+            return actionsHistory;
+        }
+        set
+        {
+            actionsHistory = value;
+        }
+    }
+
+    // history of players for Undo button
+    public static ArrayList BetsHistory
+    {
+        get
+        {
+            return betsHistory;
+        }
+        set
+        {
+            betsHistory = value;
+        }
     }
 }

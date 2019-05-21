@@ -22,11 +22,9 @@ public class turnManager : MonoBehaviour
             SetCurrentPlayer(TableDataClass.GetIndexOfPosition("BU") + 3);
 
         // init for Undo button
-        if(TableDataClass.PreviousBet.Count == 0)
-        {
-            TableDataClass.PreviousBet.Add(0.5f);
-            TableDataClass.PreviousBet.Add(1f);
-        }
+        TableDataClass.PlayersHistory.Clear();
+        TableDataClass.ActionsHistory.Clear();
+        TableDataClass.BetsHistory.Clear();
     }
 
     public void Fold()
@@ -42,18 +40,35 @@ public class turnManager : MonoBehaviour
         }
 
         // Change the current player
-        if (playerPosition == TableDataClass.NumberOfPlayer - 1)
-            SetCurrentPlayer(0);
+        if(playerPosition == 0)
+        {
+          // stop the game because hero has fold
+          SetCurrentPlayer(0);
+        }
+        else if (playerPosition == TableDataClass.NumberOfPlayer - 1)
+        {
+          SetCurrentPlayer(0);
+          TableDataClass.PlayersHistory.Add(TableDataClass.NameByPosition[playerPosition]);
+          TableDataClass.ActionsHistory.Add("fold");
+          TableDataClass.BetsHistory.Add(TableDataClass.BetsByPosition[playerPosition]);
+        }
         else
-            SetCurrentPlayer(playerPosition + 1);
+        {
+          SetCurrentPlayer(playerPosition + 1);
+          TableDataClass.PlayersHistory.Add(TableDataClass.NameByPosition[playerPosition]);
+          TableDataClass.ActionsHistory.Add("fold");
+          TableDataClass.BetsHistory.Add(TableDataClass.BetsByPosition[playerPosition]);
+        }
 
         SetBetsOnTable();
-        TableDataClass.PreviousAction.Add("fold");
     }
 
     public void Raise()
     {
         int index = getCurrentPlayerID();
+
+        // For Undo Button
+        TableDataClass.BetsHistory.Add(TableDataClass.BetsByPosition[index]);
 
         // Increase the players's bet
         int[] maxBet = maxBetOnTable();
@@ -64,16 +79,22 @@ public class turnManager : MonoBehaviour
             SetCurrentPlayer(0);
         else
             SetCurrentPlayer(index + 1);
-        
+
         SetBetsOnTable();
         ChangeRaiseButtonIcons();
-        TableDataClass.PreviousAction.Add("raise");
-        TableDataClass.PreviousBet.Add(maxBet[0] + 1f);
+
+        // For Undo Button
+        TableDataClass.PlayersHistory.Add(TableDataClass.NameByPosition[index]);
+        TableDataClass.ActionsHistory.Add("raise");
+
     }
 
     public void Call()
     {
         int index = getCurrentPlayerID();
+
+        // For Undo Button
+        TableDataClass.BetsHistory.Add(TableDataClass.BetsByPosition[index]);
 
         // Call
         int[] maxBet = maxBetOnTable();
@@ -86,68 +107,67 @@ public class turnManager : MonoBehaviour
             SetCurrentPlayer(index + 1);
 
         SetBetsOnTable();
-        TableDataClass.PreviousAction.Add("call");
-        TableDataClass.PreviousBet.Add((float)maxBet[0]);
+
+        // For Undo Button
+        TableDataClass.PlayersHistory.Add(TableDataClass.NameByPosition[index]);
+        TableDataClass.ActionsHistory.Add("call");
+
     }
 
     public void Undo()
     {
-        if(TableDataClass.PreviousAction.Count > 0)
-        {
-            // find the previous player
-            int previousPlayer;
-            if (getCurrentPlayerID() == 0)
-                previousPlayer = TableDataClass.NumberOfPlayer - 1;
-            else
-                previousPlayer = getCurrentPlayerID() - 1;
-
-            if (TableDataClass.PreviousAction[TableDataClass.PreviousAction.Count - 1].Equals("fold"))
+      if (TableDataClass.PlayersHistory.Count > 0)
+      {
+          // Find the previous player
+          int previousPlayer = -1;
+           for(int i = 0; i < TableDataClass.NumberOfPlayer; i++)
+          {
+            if(TableDataClass.PlayersHistory[TableDataClass.PlayersHistory.Count - 1] == TableDataClass.NameByPosition[i])
             {
-                if(previousPlayer != 0)
-                {
-                    GameObject.Find(previousPlayer.ToString() + "BtnCardPlayer").GetComponent<Image>().color = new Color(1, 1, 1, 1);
-                    GameObject.Find(previousPlayer.ToString() + "BtnCardPlayer").GetComponent<Button>().interactable = true;
-                    TableDataClass.FoldByPosition[previousPlayer] = false;
-                }             
+              previousPlayer = i;
             }
-            else // if the previous action was to call or raise 
-            {
-                //display the raise button
-                int[] maxBet = maxBetOnTable();
-                if (maxBet[0] <= 4)
-                {
-                    GameObject.Find("BtnRaise").GetComponent<Button>().interactable = true;
-                    GameObject.Find("BtnRaise").GetComponent<Image>().color = new Color(1, 1, 1, 1);
-                    GameObject.Find("ImgRaise").GetComponent<Image>().color = new Color(1, 1, 1, 1);
-                    GameObject.Find("TxtRaise").GetComponent<Text>().text = "Raise";
-                }
+          }
 
-                if (TableDataClass.PreviousAction.Count >= TableDataClass.NumberOfPlayer - 1)
-                {
-                    TableDataClass.BetsByPosition[previousPlayer] = (float)TableDataClass.PreviousBet[TableDataClass.PreviousAction.Count - (TableDataClass.NumberOfPlayer - 1)];
-                }
-                else
-                {
-                    TableDataClass.BetsByPosition[previousPlayer] = 0f;
-                }
+          //display the raise button
+          int[] maxBet = maxBetOnTable();
+          if (maxBet[0] <= 4)
+          {
+              GameObject.Find("BtnRaise").GetComponent<Button>().interactable = true;
+              GameObject.Find("BtnRaise").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+              GameObject.Find("ImgRaise").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+              GameObject.Find("TxtRaise").GetComponent<Text>().text = "Raise";
+          }
 
-                TableDataClass.PreviousBet.RemoveAt(TableDataClass.PreviousBet.Count - 1);
-            }
+          // reset the currentPlayer player's bet
+          TableDataClass.BetsByPosition[previousPlayer] = (float) TableDataClass.BetsHistory[TableDataClass.BetsHistory.Count - 1];
 
-            // Erase the previous highlight
-            GameObject.Find(getCurrentPlayerID().ToString() + "PanelPlayer").GetComponent<Image>().color = new Color(1, 1, 0.67f, 0);
+          // if the previous player has fold
+          if(TableDataClass.ActionsHistory[TableDataClass.ActionsHistory.Count - 1].Equals("fold"))
+          {
+              GameObject.Find(previousPlayer.ToString() + "BtnCardPlayer").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+              GameObject.Find(previousPlayer.ToString() + "BtnCardPlayer").GetComponent<Button>().interactable = true;
+              TableDataClass.FoldByPosition[previousPlayer] = false;
+          }
 
-            // Highlight the new current player and erase the color of the previous one
-            GameObject.Find(previousPlayer.ToString() + "PanelPlayer").GetComponent<Image>().color = new Color(1, 1, 0.67f, 0.5f);
+          // Erase the previous highlight
+          GameObject.Find(getCurrentPlayerID().ToString() + "PanelPlayer").GetComponent<Image>().color = new Color(1, 1, 0.67f, 0);
 
-            // Change the name of the current player on the board
-            GameObject.Find("TxtCurrentPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[previousPlayer];
-            TableDataClass.CurrentPlayer = TableDataClass.NameByPosition[previousPlayer];
+          // Highlight the new current player and erase the color of the previous one
+          GameObject.Find(previousPlayer.ToString() + "PanelPlayer").GetComponent<Image>().color = new Color(1, 1, 0.67f, 0.5f);
 
-            SetBetsOnTable();
-            ChangeRaiseButtonIcons();
-            TableDataClass.PreviousAction.RemoveAt(TableDataClass.PreviousAction.Count - 1);
-        }
+          // Change the name of the current player on the board
+          GameObject.Find("TxtCurrentPlayer").GetComponent<Text>().text = TableDataClass.NameByPosition[previousPlayer];
+          TableDataClass.CurrentPlayer = TableDataClass.NameByPosition[previousPlayer];
+
+          // Erase the previous actions
+          TableDataClass.PlayersHistory.RemoveAt(TableDataClass.PlayersHistory.Count - 1);
+          TableDataClass.ActionsHistory.RemoveAt(TableDataClass.ActionsHistory.Count - 1);
+          TableDataClass.BetsHistory.RemoveAt(TableDataClass.BetsHistory.Count - 1);
+
+          SetBetsOnTable();
+          ChangeRaiseButtonIcons();
+      }
+
     }
 
     // return the max number of bet (2Bet, 3Bet...) on the table and where it was
@@ -207,7 +227,7 @@ public class turnManager : MonoBehaviour
             }
         }
 
-        // Highlight the new current player and erase the color of the previous one      
+        // Highlight the new current player and erase the color of the previous one
         GameObject.Find(playerID.ToString() + "PanelPlayer").GetComponent<Image>().color = new Color(1, 1, 0.67f, 0.5f);
 
         // Change the name of the current player on the board
@@ -257,7 +277,7 @@ public class turnManager : MonoBehaviour
 
     void ChangeRaiseButtonIcons()
     {
-        // change the icon from the board buttons   
+        // change the icon from the board buttons
         int[] maxBet = maxBetOnTable();
         switch (maxBet[0])
         {
