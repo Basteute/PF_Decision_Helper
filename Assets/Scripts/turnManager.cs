@@ -25,6 +25,8 @@ public class turnManager : MonoBehaviour
         TableDataClass.PlayersHistory.Clear();
         TableDataClass.ActionsHistory.Clear();
         TableDataClass.BetsHistory.Clear();
+
+        ChangeRaiseButtonIcons();
     }
 
     public void Fold()
@@ -61,6 +63,7 @@ public class turnManager : MonoBehaviour
         }
 
         SetBetsOnTable();
+        ChangeRaiseButtonIcons();
     }
 
     public void Raise()
@@ -107,6 +110,7 @@ public class turnManager : MonoBehaviour
             SetCurrentPlayer(index + 1);
 
         SetBetsOnTable();
+        ChangeRaiseButtonIcons();
 
         // For Undo Button
         TableDataClass.PlayersHistory.Add(TableDataClass.NameByPosition[index]);
@@ -291,6 +295,18 @@ public class turnManager : MonoBehaviour
                 GameObject.Find("BtnRaise").GetComponent<Image>().color = new Color(1, 1, 1, 1);
                 GameObject.Find("ImgRaise").GetComponent<Image>().color = new Color(1, 1, 1, 1);
                 GameObject.Find("TxtRaise").GetComponent<Text>().text = "Raise";
+
+                // Set the raise text to "Open" if Nobody has opened
+                int limper = -1;
+                for(int i = 0; i < TableDataClass.NumberOfPlayer; i++)
+                {
+                  if(TableDataClass.BetsByPosition[i] == 1)
+                    limper++;
+                }
+
+                if(limper == 0)
+                    GameObject.Find("TxtRaise").GetComponent<Text>().text = "Open";
+
                 break;
 
             case 2:

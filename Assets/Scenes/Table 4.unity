@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: 210794867}
   - component: {fileID: 210794866}
   m_Layer: 5
-  m_Name: BtnDealerSetter
+  m_Name: BtnDealerSetter2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1031,6 +1031,41 @@ Prefab:
       propertyPath: m_Colors.m_DisabledColor.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 224809174676759966, guid: 910fab2615c85794d87cad8d0a93294f,
+        type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224809174676759966, guid: 910fab2615c85794d87cad8d0a93294f,
+        type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224809174676759966, guid: 910fab2615c85794d87cad8d0a93294f,
+        type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0.9999996
+      objectReference: {fileID: 0}
+    - target: {fileID: 224809174676759966, guid: 910fab2615c85794d87cad8d0a93294f,
+        type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.0009652007
+      objectReference: {fileID: 0}
+    - target: {fileID: 224809174676759966, guid: 910fab2615c85794d87cad8d0a93294f,
+        type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -180.111
+      objectReference: {fileID: 0}
+    - target: {fileID: 224809174676759966, guid: 910fab2615c85794d87cad8d0a93294f,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.15946198
+      objectReference: {fileID: 0}
+    - target: {fileID: 224809174676759966, guid: 910fab2615c85794d87cad8d0a93294f,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.22003174
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 910fab2615c85794d87cad8d0a93294f, type: 2}
   m_IsPrefabAsset: 0
@@ -1479,7 +1514,7 @@ GameObject:
   - component: {fileID: 427583736}
   - component: {fileID: 427583735}
   m_Layer: 5
-  m_Name: BtnDealerSetter
+  m_Name: BtnDealerSetter0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1743,16 +1778,16 @@ RectTransform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 519264363}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.9999976, w: -0.0021943443}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 956126268}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 179.74901}
   m_AnchorMin: {x: 0.083000004, y: 0.09116949}
   m_AnchorMax: {x: 0.885875, y: 0.8974406}
-  m_AnchoredPosition: {x: -0.15999985, y: -0.22000122}
+  m_AnchoredPosition: {x: -0.16009521, y: -0.22000885}
   m_SizeDelta: {x: 1.9500008, y: -0.049999237}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &519264365
@@ -2512,7 +2547,7 @@ GameObject:
   - component: {fileID: 919876272}
   - component: {fileID: 919876271}
   m_Layer: 5
-  m_Name: BtnDealerSetter
+  m_Name: BtnDealerSetter3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3718,16 +3753,16 @@ RectTransform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1348618102}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.99999905, w: 0.001389477}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 585710179}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180.159}
   m_AnchorMin: {x: 0.147, y: 0.12538107}
   m_AnchorMax: {x: 0.88453853, y: 0.863238}
-  m_AnchoredPosition: {x: 0.040000916, y: 0.069999695}
+  m_AnchoredPosition: {x: 0.039985657, y: 0.06987381}
   m_SizeDelta: {x: 0.37000084, y: 1.2700005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1348618104
@@ -4008,7 +4043,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Changer le dealer
+  m_Text: Changer le bouton
 --- !u!222 &1426949179
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4240,7 +4275,7 @@ GameObject:
   - component: {fileID: 1497908280}
   - component: {fileID: 1497908279}
   m_Layer: 5
-  m_Name: BtnDealerSetter
+  m_Name: BtnDealerSetter1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
