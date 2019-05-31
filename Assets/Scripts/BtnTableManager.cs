@@ -21,6 +21,15 @@ public class BtnTableManager : MonoBehaviour
         // Init bets and positions
         initalNameByPosition = TableDataClass.initalNameByPosition;
         initalBetByPosition = TableDataClass.initalBetByPosition;
+
+        // Disable all dealer's buttons in front of non dealer players
+        for(int i = 0; i < TableDataClass.NumberOfPlayer; i++)
+        {
+          if(TableDataClass.NameByPosition[i] != "BU")
+            GameObject.Find("BtnDealerSetter" + i).GetComponent<Button>().interactable = false;
+          else
+            GameObject.Find("BtnDealerSetter" + i).GetComponent<Button>().interactable = true;
+        }
     }
 
     void initTable(int posBU)
@@ -80,14 +89,16 @@ public class BtnTableManager : MonoBehaviour
                 GameObject BtnDealer = GameObject.Find("BtnD" + i.ToString());
                 BtnDealer.GetComponent<Image>().color = new Color(1, 1, 1, 1);
                 BtnDealer.GetComponent<Button>().interactable = true;
+                GameObject.Find("BtnDealerSetter" + i).GetComponent<Button>().interactable = true;
             }
+
+            GameObject.Find("TxtActionInfo").GetComponent<Text>().text = "Choisissez La position du bouton";
         }
         else
         {
+            panelDealerSetter.SetActive(true);
             DealerSetter(0);
         }
-
-        GameObject.Find("TxtActionInfo").GetComponent<Text>().text = "Choisissez un Dealer";
         SetBetsOnTable();
     }
 
@@ -168,6 +179,15 @@ public class BtnTableManager : MonoBehaviour
                 GameObject.Find((position + 1).ToString() + "BetPlayer").GetComponent<Image>().sprite = SB;
                 GameObject.Find((position + 2).ToString() + "BetPlayer").GetComponent<Image>().sprite = BB;
                 SetCurrentPlayer(position + 3);
+            }
+
+            // Disable all dealer's buttons in front of non dealer players
+            for(int i = 0; i < TableDataClass.NumberOfPlayer; i++)
+            {
+              if(TableDataClass.NameByPosition[i] != "BU")
+                GameObject.Find("BtnDealerSetter" + i).GetComponent<Button>().interactable = false;
+              else
+                GameObject.Find("BtnDealerSetter" + i).GetComponent<Button>().interactable = true;
             }
         }
         else
@@ -262,7 +282,7 @@ public class BtnTableManager : MonoBehaviour
         TableDataClass.PreviousAction.Add("SB"); // Test
         TableDataClass.PreviousAction.Add("BB"); // Test
 
-        SetBetsOnTable();
+        ResetBets(1,2);
     }
 
     void ResetBets(int SBPos, int BBPos)
