@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Table 3.unity
+- path: Assets/Scenes/RangeDisplay.unity
   isLoaded: 1
   isActive: 1

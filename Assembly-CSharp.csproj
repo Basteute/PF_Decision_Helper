@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\Methods\tableMethods.cs" />
      <Compile Include="Assets\Scripts\PFDecisionMaker.cs" />
      <Compile Include="Assets\Scripts\PlayerSelector.cs" />
+     <Compile Include="Assets\Scripts\RangeDisplayer.cs" />
      <Compile Include="Assets\Scripts\Ranges\PokerRange\IsoRangeClass.cs" />
      <Compile Include="Assets\Scripts\Ranges\PokerRange\OpenRangeClass.cs" />
      <Compile Include="Assets\Scripts\Ranges\PokerRange\RaiseRangeClass.cs" />
